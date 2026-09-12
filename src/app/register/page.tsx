@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import styles from './register.module.css'
-import RegisterInteractivePanel from './RegisterInteractivePanel'
+import RegisterAsciiArt from './RegisterAsciiArt'
 
 interface Campus {
   id: string
@@ -431,9 +431,9 @@ function RegisterForm() {
         </div>
       </div>
 
-      {/* Right Column: Interactive Career & Placement Radar */}
+      {/* Right Column: ASCII Topology Artwork */}
       <div className={styles.interactiveSection}>
-        <RegisterInteractivePanel />
+        <RegisterAsciiArt />
       </div>
     </div>
   )

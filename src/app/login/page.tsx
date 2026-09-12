@@ -5,7 +5,7 @@ import { signIn } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import styles from './login.module.css'
-import InteractivePanel from './InteractivePanel'
+import LoginAsciiArt from './LoginAsciiArt'
 
 function LoginForm() {
   const router = useRouter()
@@ -201,9 +201,9 @@ function LoginForm() {
         </div>
       </div>
 
-      {/* Right Column: Interactive Cool Element */}
+      {/* Right Column: ASCII Terminal Artwork */}
       <div className={styles.interactiveSection}>
-        <InteractivePanel />
+        <LoginAsciiArt />
       </div>
     </div>
   )
