@@ -1,0 +1,165 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--border);
+  background: rgba(8, 9, 11, 0.94);
+  backdrop-filter: blur(12px);
+}
+
+.navContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4.25rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.logoBadge {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #08090b;
+  background: var(--accent);
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoText {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.logoTag {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.link {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--text-secondary);
+  padding: 0.5rem 0.875rem;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.link:hover {
+  color: #ffffff;
+}
+
+.loginBtn {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: #ffffff;
+  color: #08090b;
+  padding: 0.55rem 1.125rem;
+  border: 1px solid #ffffff;
+  margin-left: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.loginBtn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #08090b;
+}
+
+.userPill {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.75rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  margin-left: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.userName {
+  font-weight: 500;
+  color: var(--text-primary);
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.roleTag {
+  font-size: 0.65rem;
+  padding: 0.15rem 0.4rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+}
+
+.roleStudent {
+  composes: roleTag;
+  background: rgba(255, 255, 255, 0.06);
+  color: #e2e4e9;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.roleAdmin {
+  composes: roleTag;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.roleSuper {
+  composes: roleTag;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+.signOutBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.4rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 0.25rem;
+}
+
+.signOutBtn:hover {
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.4);
+}

@@ -1,0 +1,135 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String   @id @default(uuid())
+  email               String   @unique
+  name                String
+  passwordHash        String?
+  image               String?
+  role                Role     @default(STUDENT)
+  campusId            String?
+  campus              Campus?  @relation(fields: [campusId], references: [id])
+  verificationStatus  Status   @default(PENDING)
+  rollNumber          String?
+  branch              String?
+  graduationYear      Int?
+  
+  experiences         Experience[]
+  reports             Report[]
+  resetRequests       PasswordResetRequest[] @relation("resetRequests")
+  resolvedResets      PasswordResetRequest[] @relation("resolvedResets")
+}
+
+enum Role {
+  STUDENT
+  TPC_ADMIN
+  SUPER_ADMIN
+}
+
+enum Status {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+model Campus {
+  id          String   @id @default(uuid())
+  name        String
+  location    String
+  status      String   @default("ACTIVE")
+  
+  users       User[]
+  drives      PlacementDrive[]
+}
+
+model Company {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  
+  drives      PlacementDrive[]
+}
+
+model PlacementDrive {
+  id          String   @id @default(uuid())
+  campusId    String
+  campus      Campus   @relation(fields: [campusId], references: [id])
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id])
+  year        Int
+  role        String
+  
+  experiences Experience[]
+}
+
+model Experience {
+  id                  String   @id @default(uuid())
+  driveId             String
+  drive               PlacementDrive @relation(fields: [driveId], references: [id])
+  studentId           String
+  student             User     @relation(fields: [studentId], references: [id])
+  result              String   // e.g., "Selected", "Rejected"
+  submittedAt         DateTime @default(now())
+  verificationStatus  Status   @default(PENDING)
+  publishedAt         DateTime?
+  isAnonymous         Boolean  @default(true)
+  
+  rounds              InterviewRound[]
+  reports             Report[]
+}
+
+model InterviewRound {
+  id              String   @id @default(uuid())
+  experienceId    String
+  experience      Experience @relation(fields: [experienceId], references: [id])
+  roundNumber     Int
+  type            String   // e.g., "Online Assessment", "Technical", "HR"
+  durationMinutes Int
+  difficulty      Int      // 1-5
+  description     String
+  topics          String[] // Array of topics e.g., ["DSA", "DBMS"]
+  
+  questions       Question[]
+}
+
+model Question {
+  id              String   @id @default(uuid())
+  roundId         String
+  round           InterviewRound @relation(fields: [roundId], references: [id])
+  questionText    String
+  category        String?
+}
+
+model Report {
+  id              String   @id @default(uuid())
+  experienceId    String
+  experience      Experience @relation(fields: [experienceId], references: [id])
+  reporterId      String
+  reporter        User     @relation(fields: [reporterId], references: [id])
+  reason          String
+  status          String   @default("OPEN")
+  createdAt       DateTime @default(now())
+}
+
+model PasswordResetRequest {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation("resetRequests", fields: [userId], references: [id])
+  status       String   @default("PENDING")  // PENDING, APPROVED, REJECTED
+  resolvedById String?
+  resolvedBy   User?    @relation("resolvedResets", fields: [resolvedById], references: [id])
+  requestedAt  DateTime @default(now())
+  resolvedAt   DateTime?
+
+  @@index([userId])
+  @@index([status])
+}

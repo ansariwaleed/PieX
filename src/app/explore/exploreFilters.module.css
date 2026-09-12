@@ -1,0 +1,545 @@
+/* ============================================================
+   ExploreFilters Modular Styles
+   Aesthetic: Editorial Noir · Sharp Precision · Luxury Minimalist
+   ============================================================ */
+
+.filterContainer {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ——— Primary Search & Filter Control Row ——— */
+.searchBarWrapper {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.searchBarWrapper:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-dim);
+}
+
+.searchForm {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+.inputPrefixIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 1.25rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.95rem 1rem;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.searchInput::placeholder {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+}
+
+.clearInputBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  transition: color 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clearInputBtn:hover {
+  color: var(--text-primary);
+}
+
+.searchBtn {
+  background: #ffffff;
+  color: #08090b;
+  border: none;
+  padding: 0 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchBtn:hover {
+  background: var(--accent);
+  color: #08090b;
+}
+
+/* ——— Filter Toggle Button ——— */
+.filterToggleBtn {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  border: none;
+  border-left: 1px solid var(--border);
+  padding: 0 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.filterToggleBtn:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+}
+
+.filterToggleBtnActive {
+  background: var(--bg-card-hover);
+  color: var(--accent);
+  border-left-color: var(--accent);
+}
+
+.activeBadge {
+  background: var(--accent);
+  color: #08090b;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.4rem;
+  line-height: 1;
+}
+
+.chevron {
+  font-size: 0.55rem;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-block;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* ——— Quick Campus Bar ——— */
+.quickCampusRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.quickCampusLabel {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+}
+
+.quickCampusList {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.campusChip {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  padding: 0.35rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  text-transform: capitalize;
+}
+
+.campusChip:hover {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+}
+
+.campusChipActive {
+  background: #ffffff !important;
+  color: #08090b !important;
+  border-color: #ffffff !important;
+  font-weight: 700;
+}
+
+/* ——— Collapsible Advanced Filters Drawer ——— */
+.drawer {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-strong);
+  padding: 1.5rem;
+  margin-top: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  animation: slideDown 0.22s var(--ease-editorial) forwards;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.drawerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.drawerTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.drawerKicker {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  font-weight: 600;
+}
+
+.drawerSubtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.drawerResetBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.15s ease;
+}
+
+.drawerResetBtn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* 4-Column Grid inside Drawer */
+.drawerGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  .drawerGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .drawerGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fieldLabel {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fieldSelect {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%239aa0a9' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 9px;
+  padding-right: 2rem;
+}
+
+.fieldSelect:focus {
+  border-color: var(--accent);
+}
+
+.fieldSelect option {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+/* Segmented Pill Buttons */
+.pillButtonGroup {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+}
+
+.pillBtn {
+  flex: 1;
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  border-right: 1px solid var(--border);
+  padding: 0.7rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.pillBtn:last-child {
+  border-right: none;
+}
+
+.pillBtn:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+}
+
+.pillBtnActive {
+  background: #ffffff !important;
+  color: #08090b !important;
+  font-weight: 700;
+}
+
+.pillSuccess {
+  background: var(--success-bg) !important;
+  color: var(--success) !important;
+  border-color: var(--success-border) !important;
+}
+
+.pillDanger {
+  background: var(--danger-bg) !important;
+  color: var(--danger) !important;
+  border-color: var(--danger) !important;
+}
+
+/* Drawer Footer */
+.drawerFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.drawerSummary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.drawerDot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  display: inline-block;
+}
+
+.drawerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.drawerCancelBtn {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 0.65rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.15s ease;
+}
+
+.drawerCancelBtn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+}
+
+.drawerApplyBtn {
+  background: var(--accent);
+  color: #08090b;
+  border: none;
+  padding: 0.65rem 1.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.drawerApplyBtn:hover {
+  background: var(--accent-hover);
+}
+
+/* ——— Active Chips Bar ——— */
+.activeChipsBar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed var(--border);
+  flex-wrap: wrap;
+}
+
+.activeChipsLabel {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+}
+
+.chipsContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  padding: 0.25rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.chipKey {
+  color: var(--text-muted);
+}
+
+.chipVal {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.chipRemove {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.7rem;
+  line-height: 1;
+  padding: 0 0.15rem;
+  transition: color 0.15s ease;
+}
+
+.chipRemove:hover {
+  color: var(--accent);
+}
+
+.clearAllBtn {
+  background: transparent;
+  border: none;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0.2rem 0.4rem;
+}
+
+.clearAllBtn:hover {
+  color: var(--accent-hover);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+  .searchBarWrapper {
+    flex-direction: column;
+  }
+  
+  .filterToggleBtn {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding: 0.75rem 1rem;
+    justify-content: center;
+  }
+
+  .searchBtn {
+    padding: 0.75rem 1rem;
+  }
+}

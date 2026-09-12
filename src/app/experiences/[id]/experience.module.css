@@ -1,0 +1,533 @@
+/* ——— Experience Dossier & Case Study Reading Layout ——— */
+
+.readingContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem 5rem;
+}
+
+/* ——— Top Bar Navigation & Actions ——— */
+.topNavRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.25rem 0 1.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2.5rem;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: color 0.2s;
+  text-decoration: none;
+}
+
+.backLink:hover {
+  color: #ffffff;
+}
+
+.topActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* ——— Article Header ——— */
+.articleHeader {
+  margin-bottom: 2.5rem;
+}
+
+.kickerRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.kickerDivider {
+  color: var(--border-strong);
+}
+
+.readTime {
+  color: var(--text-muted);
+}
+
+.articleTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 4vw, 3.75rem);
+  font-weight: 500;
+  line-height: 1.08;
+  color: #ffffff;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.75rem;
+}
+
+.articleSubtitle {
+  font-family: var(--font-sans);
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+
+/* ——— Structured Parameters Bar ——— */
+.parametersBar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.paramBox {
+  background: var(--bg-card);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.paramLabel {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.paramValue {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* ——— TPC Official Verification Banner ——— */
+.verifiedBanner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0b0e14;
+  border: 1px solid var(--border-strong);
+  border-left: 3px solid var(--accent);
+  padding: 1.25rem 1.75rem;
+  margin-bottom: 3rem;
+}
+
+.verifiedLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.verifiedTag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.verifiedSub {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.verifiedBadge {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.75rem;
+  background: rgba(212, 175, 55, 0.12);
+  color: var(--accent);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+/* ——— Main Editorial Grid ——— */
+.editorialLayout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 3.5rem;
+  align-items: flex-start;
+  margin-bottom: 5rem;
+}
+
+/* ——— Long-Form Narrative Container ——— */
+.narrativeFlow {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.sectionHeading {
+  font-family: var(--font-serif);
+  font-size: 1.875rem;
+  font-weight: 500;
+  color: #ffffff;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  letter-spacing: -0.01em;
+}
+
+/* ——— Round Card ——— */
+.roundCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 2.5rem;
+  scroll-margin-top: 5rem;
+}
+
+.roundKicker {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.roundIndex {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+}
+
+.roundTitle {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 1.25rem;
+  line-height: 1.2;
+}
+
+.roundMetaRow {
+  display: flex;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.difficultyGauge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gaugeDiamonds {
+  color: var(--accent);
+  letter-spacing: 0.15em;
+}
+
+.gaugeText {
+  color: var(--text-secondary);
+}
+
+.topicsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 1.5rem;
+}
+
+.topicTag {
+  padding: 0.25rem 0.65rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.roundProse {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.02);
+  border-left: 2px solid var(--border-strong);
+  padding: 1.75rem 2rem;
+  margin: 0;
+}
+
+/* ——— Key Advice / Preparation Takeaways ——— */
+.adviceCard {
+  background: #0e1117;
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent);
+  padding: 2.5rem;
+}
+
+.adviceTitle {
+  font-family: var(--font-serif);
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.adviceList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.adviceItem {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.adviceBullet {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+/* ——— Sticky Navigation Sidebar ——— */
+.stickySidebar {
+  position: sticky;
+  top: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.tocCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 1.75rem;
+}
+
+.tocHeader {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tocList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tocLink {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: all 0.2s;
+  padding: 0.35rem 0;
+}
+
+.tocLink:hover {
+  color: #ffffff;
+  padding-left: 0.35rem;
+}
+
+.tocIndex {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.topicsCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 1.75rem;
+}
+
+.topicsTitle {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.topicMetricRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.topicMetricRow:last-child {
+  border-bottom: none;
+}
+
+.topicMetricName {
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.topicMetricCount {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ——— Related Intelligence / Read Next Section ——— */
+.relatedSection {
+  border-top: 1px solid var(--border);
+  padding-top: 3.5rem;
+}
+
+.relatedHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 2rem;
+}
+
+.relatedTitle {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.relatedSubtitle {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.relatedCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 1.75rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.25s ease;
+}
+
+.relatedCard:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.relatedCardKicker {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+
+.relatedCardTitle {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.relatedCardRole {
+  font-size: 0.875rem;
+  color: var(--accent);
+  margin-bottom: 1.25rem;
+}
+
+.relatedCardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ——— Responsive Adjustments ——— */
+@media (max-width: 1024px) {
+  .editorialLayout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .parametersBar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .stickySidebar {
+    position: static;
+  }
+  .relatedGrid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,197 @@
+.pageGrid {
+  height: calc(100vh - 4.25rem);
+  max-height: calc(100vh - 4.25rem);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  background: var(--bg-primary);
+  width: 100%;
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem 2.5rem;
+  height: 100%;
+  overflow-y: auto;
+  position: relative;
+  background: radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.03) 0%, transparent 60%), #08090b;
+}
+
+/* Custom minimal scrollbar if needed on very small laptop screens */
+.formSection::-webkit-scrollbar {
+  width: 4px;
+}
+.formSection::-webkit-scrollbar-track {
+  background: transparent;
+}
+.formSection::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+}
+
+.formCard {
+  width: 100%;
+  max-width: 500px;
+}
+
+.formHeader {
+  text-align: left;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.85rem;
+}
+
+.formTitle {
+  font-family: var(--font-serif);
+  font-size: 2.1rem;
+  font-weight: 400;
+  color: #ffffff;
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.formSubtitle {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+}
+
+.toggleRow {
+  display: flex;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  margin-bottom: 1.15rem;
+}
+
+.toggleBtn {
+  flex: 1;
+  padding: 0.55rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: all 0.2s ease;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+}
+
+.toggleBtn:hover {
+  color: #ffffff;
+}
+
+.toggleBtnActive {
+  composes: toggleBtn;
+  background: #ffffff;
+  color: #08090b;
+  font-weight: 700;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 0.85rem;
+  background: #ffffff;
+  color: #08090b;
+  border: 1px solid #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.25s var(--ease-editorial);
+  margin-top: 0.75rem;
+}
+
+.submitBtn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #08090b;
+  transform: translateY(-1px);
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.footerText {
+  text-align: left;
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.footerLink {
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.footerLink:hover {
+  color: var(--accent);
+}
+
+.alert {
+  padding: 0.65rem 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+}
+
+.alertSuccess {
+  composes: alert;
+  background: var(--success-bg);
+  border-color: var(--success-border);
+  color: #34d399;
+}
+
+.alertError {
+  composes: alert;
+  background: var(--danger-bg);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+.interactiveSection {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+}
+
+@media (max-width: 1024px) {
+  .pageGrid {
+    height: auto;
+    max-height: none;
+    overflow-y: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .interactiveSection {
+    min-height: 520px;
+  }
+}
