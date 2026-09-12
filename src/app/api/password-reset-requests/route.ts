@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/auth"
+import { enforceRateLimit } from "@/lib/rateLimit"
 
 // POST: Create a new password reset request (public — user submits with their email)
 export async function POST(request: Request) {
   try {
+    // Rate limit: 5 password reset requests per 10 minutes per IP
+    const rateLimitError = enforceRateLimit(request, 'password-reset', { limit: 5, windowSeconds: 600 })
+    if (rateLimitError) return rateLimitError
+
     const body = await request.json()
     const email = body.email?.toLowerCase().trim()
 

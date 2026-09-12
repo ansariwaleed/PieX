@@ -33,9 +33,9 @@ function RegisterForm() {
     password: '',
     campusId: '',
     collegeName: '',
-    branch: 'B.Tech CSE',
+    branch: '',
     rollNumber: '',
-    graduationYear: '2026'
+    graduationYear: ''
   })
 
   useEffect(() => {
@@ -44,13 +44,6 @@ function RegisterForm() {
       .then(data => {
         if (Array.isArray(data)) {
           setCampuses(data)
-          if (data.length > 0) {
-            setFormData(prev => ({ 
-              ...prev, 
-              campusId: data[0].id,
-              collegeName: prev.collegeName || data[0].name 
-            }))
-          }
         }
       })
       .catch(console.error)
@@ -363,6 +356,7 @@ function RegisterForm() {
                       value={formData.campusId}
                       onChange={e => setFormData({ ...formData, campusId: e.target.value })}
                     >
+                      <option value="">Select your college / campus...</option>
                       {campuses.map(c => (
                         <option key={c.id} value={c.id}>
                           {c.name} ({c.location})

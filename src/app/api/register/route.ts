@@ -1,9 +1,14 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
+import { enforceRateLimit } from "@/lib/rateLimit"
 
 export async function POST(request: Request) {
   try {
+    // Rate limit: 10 registration attempts per 10 minutes per IP
+    const rateLimitError = enforceRateLimit(request, 'register', { limit: 10, windowSeconds: 600 })
+    if (rateLimitError) return rateLimitError
+
     const body = await request.json()
     const { email, password, name, campusId, collegeName, rollNumber, branch, graduationYear, role } = body
 

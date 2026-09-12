@@ -118,42 +118,26 @@ export default function SubmitPage() {
     )
   }
 
-  // Step 1: Placement Info
-  const [companyName, setCompanyName] = useState('OTHER')
+  // Step 1: Placement Info (clean initial state, no prefilled dummy values)
+  const [companyName, setCompanyName] = useState('')
   const [customCompany, setCustomCompany] = useState('')
-  const [campusName, setCampusName] = useState('OTHER')
+  const [campusName, setCampusName] = useState('')
   const [customCampus, setCustomCampus] = useState('')
-  const [role, setRole] = useState('Associate Analyst')
-  const [year, setYear] = useState('2026')
-  const [branch, setBranch] = useState('B.Tech CSE')
+  const [role, setRole] = useState('')
+  const [year, setYear] = useState('')
+  const [branch, setBranch] = useState('')
   const [result, setResult] = useState('Selected')
-  const [isAnonymous, setIsAnonymous] = useState(true)
+  const [isAnonymous, setIsAnonymous] = useState(false)
 
-  // Step 2: Rounds
+  // Step 2: Rounds (starts with 1 clean round for candidate to fill in)
   const [rounds, setRounds] = useState<Round[]>([
     {
       roundNumber: 1,
       type: 'Online Assessment',
       durationMinutes: 60,
       difficulty: 3,
-      topics: 'Aptitude, Quantitative, Logical Reasoning',
-      description: 'Online test with 3 sections. Quantitative was medium difficulty, verbal was direct. Need good speed to complete all questions.'
-    },
-    {
-      roundNumber: 2,
-      type: 'Technical Interview',
-      durationMinutes: 45,
-      difficulty: 3,
-      topics: 'DSA, DBMS, SQL, Projects',
-      description: 'Discussed resume projects and asked SQL queries on joins. Then solved a 2-pointer problem on arrays.'
-    },
-    {
-      roundNumber: 3,
-      type: 'HR Interview',
-      durationMinutes: 20,
-      difficulty: 2,
-      topics: 'Behavioral, Teamwork, Relocation',
-      description: 'General behavioral questions like "Why this company?", "Describe a challenge you overcame", and willingness to relocate.'
+      topics: '',
+      description: ''
     }
   ])
 
@@ -164,14 +148,12 @@ export default function SubmitPage() {
     ]).then(([comps, camps]) => {
       if (Array.isArray(comps) && comps.length > 0) {
         setCompanies(comps)
-        setCompanyName(comps[0].name)
       } else {
         setCompanies([])
         setCompanyName('OTHER')
       }
       if (Array.isArray(camps) && camps.length > 0) {
         setCampuses(camps)
-        setCampusName(camps[0].name)
       } else {
         setCampuses([])
         setCampusName('OTHER')
@@ -202,6 +184,34 @@ export default function SubmitPage() {
   const removeRound = (index: number) => {
     const updated = rounds.filter((_, i) => i !== index).map((r, i) => ({ ...r, roundNumber: i + 1 }))
     setRounds(updated)
+  }
+
+  const handleNextStep1 = () => {
+    setError(null)
+    const finalComp = (companies.length === 0 || companyName === 'OTHER') ? customCompany.trim() : companyName.trim()
+    const finalCamp = (campuses.length === 0 || campusName === 'OTHER') ? customCampus.trim() : campusName.trim()
+
+    if (!finalComp) {
+      setError('Please select or enter the company name.')
+      return
+    }
+    if (!role.trim()) {
+      setError('Please enter the job role offered (e.g. Software Engineer).')
+      return
+    }
+    if (!finalCamp) {
+      setError('Please select or enter your college / campus.')
+      return
+    }
+    if (!year || isNaN(parseInt(year))) {
+      setError('Please enter a valid placement year (e.g. 2026).')
+      return
+    }
+    if (!branch.trim()) {
+      setError('Please enter your academic branch (e.g. B.Tech Computer Science).')
+      return
+    }
+    setStep(2)
   }
 
   const handleSubmit = async () => {
@@ -342,6 +352,7 @@ export default function SubmitPage() {
                   onChange={e => setCompanyName(e.target.value)}
                   id="submit-company"
                 >
+                  <option value="">Choose company...</option>
                   {companies.map(c => (
                     <option key={c.id} value={c.name}>{c.name}</option>
                   ))}
@@ -405,6 +416,7 @@ export default function SubmitPage() {
                   onChange={e => setCampusName(e.target.value)}
                   id="submit-campus"
                 >
+                  <option value="">Choose college / campus...</option>
                   {campuses.map(c => (
                     <option key={c.id} value={c.name}>{c.name}</option>
                   ))}
@@ -465,14 +477,14 @@ export default function SubmitPage() {
               <input
                 type="text"
                 className="input"
-                placeholder="e.g. B.Tech CSE"
+                placeholder="e.g. B.Tech Computer Science"
                 value={branch}
                 onChange={e => setBranch(e.target.value)}
                 id="submit-branch"
               />
             </div>
             <div className="form-group">
-              <label className="label">Final Result</label>
+              <label className="label">Placement Outcome</label>
               <select
                 className="select"
                 value={result}
@@ -487,7 +499,7 @@ export default function SubmitPage() {
           </div>
 
           <div className={styles.actions}>
-            <button className="btn btn-primary btn-lg" onClick={() => setStep(2)}>
+            <button type="button" className="btn btn-primary btn-lg" onClick={handleNextStep1}>
               Next: Add Rounds ({rounds.length}) →
             </button>
           </div>

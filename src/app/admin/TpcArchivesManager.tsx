@@ -44,6 +44,7 @@ export default function TpcArchivesManager({
   const [searchQuery, setSearchQuery] = useState<string>('')
 
   const [processingId, setProcessingId] = useState<string | null>(null)
+  const [itemToDelete, setItemToDelete] = useState<ManagedExperience | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
 
   // Extract distinct companies and years from experiences
@@ -98,11 +99,11 @@ export default function TpcArchivesManager({
   }, [experiences, selectedCompany, selectedYear, selectedStatus, selectedResult, searchQuery])
 
   // Actions: Delete, Revert, Verify
-  const handleDelete = async (id: string, company: string, role: string) => {
-    const confirmed = window.confirm(
-      `Are you sure you want to permanently delete the placement story for ${company} (${role})?`
-    )
-    if (!confirmed) return
+  const handleConfirmDelete = async () => {
+    if (!itemToDelete) return
+    const id = itemToDelete.id
+    const company = itemToDelete.drive.company.name
+    const role = itemToDelete.drive.role
 
     setProcessingId(id)
     try {
@@ -111,11 +112,12 @@ export default function TpcArchivesManager({
       })
       if (res.ok) {
         setExperiences(prev => prev.filter(e => e.id !== id))
-        setNotice(`✓ Experience for ${company} (${role}) permanently deleted.`)
+        setNotice(`Experience for ${company} (${role}) permanently deleted.`)
+        setItemToDelete(null)
       } else {
         alert('Failed to delete experience.')
       }
-    } catch (err) {
+    } catch {
       alert('Error deleting experience.')
     } finally {
       setProcessingId(null)
@@ -567,8 +569,7 @@ export default function TpcArchivesManager({
                               )}
                               <button
                                 type="button"
-                                onClick={() => handleDelete(item.id, item.drive.company.name, item.drive.role)}
-                                disabled={processingId === item.id}
+                                onClick={() => setItemToDelete(item)}
                                 style={{
                                   padding: '0.3rem 0.6rem',
                                   fontSize: '0.68rem',
@@ -579,7 +580,7 @@ export default function TpcArchivesManager({
                                   cursor: 'pointer'
                                 }}
                               >
-                                ✕ Delete
+                                Delete
                               </button>
                             </div>
                           </td>
@@ -762,8 +763,7 @@ export default function TpcArchivesManager({
                               )}
                               <button
                                 type="button"
-                                onClick={() => handleDelete(item.id, item.drive.company.name, item.drive.role)}
-                                disabled={processingId === item.id}
+                                onClick={() => setItemToDelete(item)}
                                 style={{
                                   padding: '0.3rem 0.6rem',
                                   fontSize: '0.68rem',
@@ -774,7 +774,7 @@ export default function TpcArchivesManager({
                                   cursor: 'pointer'
                                 }}
                               >
-                                ✕ Delete
+                                Delete
                               </button>
                             </div>
                           </td>
@@ -895,8 +895,7 @@ export default function TpcArchivesManager({
                         )}
                         <button
                           type="button"
-                          onClick={() => handleDelete(item.id, item.drive.company.name, item.drive.role)}
-                          disabled={processingId === item.id}
+                          onClick={() => setItemToDelete(item)}
                           style={{
                             padding: '0.3rem 0.6rem',
                             fontSize: '0.68rem',
@@ -907,7 +906,7 @@ export default function TpcArchivesManager({
                             cursor: 'pointer'
                           }}
                         >
-                          ✕ Delete
+                          Delete
                         </button>
                       </div>
                     </td>
@@ -916,6 +915,95 @@ export default function TpcArchivesManager({
               </tbody>
             </table>
           )}
+        </div>
+      )}
+
+      {/* Confirmation Modal for Placement Experience Deletion */}
+      {itemToDelete && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.85)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999,
+          padding: '1rem'
+        }}>
+          <div style={{
+            background: 'var(--bg-card)',
+            border: '1px solid rgba(239, 68, 68, 0.5)',
+            maxWidth: '500px',
+            width: '100%',
+            padding: '2.25rem'
+          }}>
+            <div style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.7rem',
+              color: '#ef4444',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              marginBottom: '0.5rem'
+            }}>
+              [TPC ADMIN ACTION // PERMANENT DELETION]
+            </div>
+            <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', color: '#ffffff', marginBottom: '0.75rem' }}>
+              Are you sure you want to delete this placement record?
+            </h3>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.25rem', lineHeight: 1.6 }}>
+              You are about to permanently delete the interview submission for <strong style={{ color: '#ffffff' }}>{itemToDelete.drive.company.name} ({itemToDelete.drive.role})</strong> by {itemToDelete.student.name}.
+            </p>
+            <div style={{
+              background: 'rgba(239, 68, 68, 0.08)',
+              borderLeft: '2px solid #ef4444',
+              padding: '0.875rem 1rem',
+              marginBottom: '1.5rem',
+              fontSize: '0.78rem',
+              color: 'var(--text-secondary)',
+              lineHeight: 1.6
+            }}>
+              This will permanently delete the experience record, all round logs, and associated questions from your campus archives. This cannot be undone.
+            </div>
+
+            <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
+              <button
+                type="button"
+                onClick={() => setItemToDelete(null)}
+                disabled={Boolean(processingId)}
+                style={{
+                  padding: '0.6rem 1.25rem',
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.75rem',
+                  background: 'transparent',
+                  border: '1px solid var(--border-strong)',
+                  color: 'var(--text-secondary)',
+                  cursor: 'pointer'
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmDelete}
+                disabled={Boolean(processingId)}
+                style={{
+                  padding: '0.6rem 1.25rem',
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.75rem',
+                  background: '#ef4444',
+                  border: '1px solid #ef4444',
+                  color: '#ffffff',
+                  fontWeight: 700,
+                  cursor: processingId ? 'wait' : 'pointer'
+                }}
+              >
+                {processingId ? 'Deleting...' : 'Confirm Permanent Deletion'}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

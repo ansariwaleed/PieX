@@ -5,8 +5,8 @@ import styles from '../admin.module.css'
 
 export default function AdminSettingsPage() {
   const [saved, setSaved] = useState(false)
-  const [campusName, setCampusName] = useState('IIT Delhi')
-  const [activeYear, setActiveYear] = useState('2026')
+  const [campusName, setCampusName] = useState('')
+  const [activeYear, setActiveYear] = useState('')
   const [requireRosterMatch, setRequireRosterMatch] = useState(true)
   const [notifyOnSubmission, setNotifyOnSubmission] = useState(true)
 
@@ -53,6 +53,7 @@ export default function AdminSettingsPage() {
             <input
               type="text"
               className="input"
+              placeholder="e.g. National Institute of Technology"
               value={campusName}
               onChange={e => setCampusName(e.target.value)}
             />

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { auth } from "@/auth"
+import { enforceRateLimit } from "@/lib/rateLimit"
 
 export async function GET(request: Request) {
   try {
@@ -65,10 +66,13 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
+    // Rate limit: 10 experience submissions per hour per IP
+    const rateLimitError = enforceRateLimit(request, 'submit-experience', { limit: 10, windowSeconds: 3600 })
+    if (rateLimitError) return rateLimitError
+
     const session = await auth()
     let studentId = session?.user?.id
 
-    // If not logged in, find a default demo student so submission succeeds smoothly
     if (!studentId) {
       const demoStudent = await prisma.user.findFirst({
         where: { role: 'STUDENT' }
@@ -76,7 +80,7 @@ export async function POST(request: Request) {
       if (demoStudent) {
         studentId = demoStudent.id
       } else {
-        return NextResponse.json({ error: "Authentication required" }, { status: 401 })
+        return NextResponse.json({ error: "Authentication required to submit placement experience" }, { status: 401 })
       }
     }
 
@@ -85,18 +89,30 @@ export async function POST(request: Request) {
       driveId: providedDriveId,
       companyName,
       campusName,
-      role = 'Analyst',
-      year = 2026,
+      role,
+      year,
       result = 'Selected',
       isAnonymous = true,
       rounds = []
     } = body
 
+    if (!providedDriveId && (!companyName?.trim() || !campusName?.trim())) {
+      return NextResponse.json({ error: "Company name and College/Campus are required." }, { status: 400 })
+    }
+
+    if (!role?.trim()) {
+      return NextResponse.json({ error: "Job role / title is required." }, { status: 400 })
+    }
+
+    if (!year) {
+      return NextResponse.json({ error: "Placement year is required." }, { status: 400 })
+    }
+
     let driveId = providedDriveId
 
     if (!driveId) {
       // Find or create Company
-      const compName = companyName || 'Deloitte'
+      const compName = companyName.trim()
       let company = await prisma.company.findFirst({
         where: { name: { equals: compName, mode: 'insensitive' } }
       })
@@ -105,7 +121,7 @@ export async function POST(request: Request) {
       }
 
       // Find or create Campus
-      const campName = campusName || 'IIT Delhi'
+      const campName = campusName.trim()
       let campus = await prisma.campus.findFirst({
         where: { name: { equals: campName, mode: 'insensitive' } }
       })

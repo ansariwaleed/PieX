@@ -18,16 +18,16 @@ interface StudentItem {
 export default function AdminStudentsClient({ initialStudents }: { initialStudents: StudentItem[] }) {
   const [students, setStudents] = useState<StudentItem[]>(initialStudents)
   const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [studentToDelete, setStudentToDelete] = useState<StudentItem | null>(null)
   const [resetModalStudent, setResetModalStudent] = useState<StudentItem | null>(null)
   const [newPassword, setNewPassword] = useState('')
   const [updatingPassword, setUpdatingPassword] = useState(false)
   const [notice, setNotice] = useState<string | null>(null)
 
-  const handleDelete = async (id: string, name: string) => {
-    const confirmed = window.confirm(
-      `Are you sure you want to delete student "${name}"? This will permanently remove their account and all their placement experience submissions.`
-    )
-    if (!confirmed) return
+  const handleConfirmDelete = async () => {
+    if (!studentToDelete) return
+    const id = studentToDelete.id
+    const name = studentToDelete.name
 
     setDeletingId(id)
     try {
@@ -36,12 +36,13 @@ export default function AdminStudentsClient({ initialStudents }: { initialStuden
       })
       if (res.ok) {
         setStudents(prev => prev.filter(s => s.id !== id))
-        setNotice(`✓ Student "${name}" has been permanently deleted.`)
+        setNotice(`Student "${name}" has been permanently deleted.`)
+        setStudentToDelete(null)
       } else {
         const data = await res.json()
         alert(data.error || 'Failed to delete student.')
       }
-    } catch (err) {
+    } catch {
       alert('Network error while deleting student.')
     } finally {
       setDeletingId(null)
@@ -163,8 +164,8 @@ export default function AdminStudentsClient({ initialStudents }: { initialStuden
                       Set Password
                     </button>
                     <button
-                      onClick={() => handleDelete(student.id, student.name)}
-                      disabled={deletingId === student.id}
+                      type="button"
+                      onClick={() => setStudentToDelete(student)}
                       style={{
                         padding: '0.35rem 0.65rem',
                         fontSize: '0.7rem',
@@ -175,7 +176,7 @@ export default function AdminStudentsClient({ initialStudents }: { initialStuden
                         cursor: 'pointer'
                       }}
                     >
-                      {deletingId === student.id ? 'Deleting...' : '✕ Delete'}
+                      Delete
                     </button>
                   </div>
                 </td>
@@ -303,6 +304,95 @@ export default function AdminStudentsClient({ initialStudents }: { initialStuden
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Confirmation Modal for Student Deletion */}
+      {studentToDelete && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.85)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999,
+          padding: '1rem'
+        }}>
+          <div style={{
+            background: 'var(--bg-card)',
+            border: '1px solid rgba(239, 68, 68, 0.5)',
+            maxWidth: '500px',
+            width: '100%',
+            padding: '2.25rem'
+          }}>
+            <div style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.7rem',
+              color: '#ef4444',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              marginBottom: '0.5rem'
+            }}>
+              [CAMPUS TPC ADMIN // PERMANENT DELETION]
+            </div>
+            <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', color: '#ffffff', marginBottom: '0.75rem' }}>
+              Are you sure you want to delete this student?
+            </h3>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.25rem', lineHeight: 1.6 }}>
+              You are about to permanently delete the record for <strong style={{ color: '#ffffff' }}>{studentToDelete.name}</strong> ({studentToDelete.email}).
+            </p>
+            <div style={{
+              background: 'rgba(239, 68, 68, 0.08)',
+              borderLeft: '2px solid #ef4444',
+              padding: '0.875rem 1rem',
+              marginBottom: '1.5rem',
+              fontSize: '0.78rem',
+              color: 'var(--text-secondary)',
+              lineHeight: 1.6
+            }}>
+              This will permanently delete the student account and unenroll them from your campus placement roster. All submitted interview experiences will be permanently deleted.
+            </div>
+
+            <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
+              <button
+                type="button"
+                onClick={() => setStudentToDelete(null)}
+                disabled={Boolean(deletingId)}
+                style={{
+                  padding: '0.6rem 1.25rem',
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.75rem',
+                  background: 'transparent',
+                  border: '1px solid var(--border-strong)',
+                  color: 'var(--text-secondary)',
+                  cursor: 'pointer'
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmDelete}
+                disabled={Boolean(deletingId)}
+                style={{
+                  padding: '0.6rem 1.25rem',
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.75rem',
+                  background: '#ef4444',
+                  border: '1px solid #ef4444',
+                  color: '#ffffff',
+                  fontWeight: 700,
+                  cursor: deletingId ? 'wait' : 'pointer'
+                }}
+              >
+                {deletingId ? 'Deleting Student...' : 'Confirm Permanent Deletion'}
+              </button>
+            </div>
           </div>
         </div>
       )}

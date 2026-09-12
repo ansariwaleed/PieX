@@ -38,6 +38,7 @@ export default function SuperAdminResetsClient({
   const [tempPassword, setTempPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [filterRole, setFilterRole] = useState<'ALL' | 'TPC_ADMIN' | 'STUDENT'>('ALL')
+  const [declineTarget, setDeclineTarget] = useState<ResetItem | null>(null)
   const [notice, setNotice] = useState<{ type: 'success' | 'error'; text: string; password?: string } | null>(null)
 
   const filteredPending = pending.filter(r => {
@@ -48,33 +49,26 @@ export default function SuperAdminResetsClient({
   const tpcPendingCount = pending.filter(r => r.user.role === 'TPC_ADMIN').length
   const studentPendingCount = pending.filter(r => r.user.role === 'STUDENT').length
 
-  const generatePassword = () => {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789!@#$'
-    let result = ''
-    for (let i = 0; i < 10; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length))
-    }
-    setTempPassword(result)
-  }
-
   const handleOpenApprove = (req: ResetItem) => {
     setSelectedReq(req)
-    if (req.user.role === 'TPC_ADMIN') {
-      setTempPassword('Admin@2026')
-    } else {
-      const roll = req.user.rollNumber ? req.user.rollNumber.replace(/[^a-zA-Z0-9]/g, '') : 'Student'
-      setTempPassword(`${roll}@2026`)
+    // Preset a clean, professional temporary password matching standard policy
+    const prefix = req.user.role === 'TPC_ADMIN' ? 'Admin' : 'Student'
+    const year = new Date().getFullYear()
+    setTempPassword(`${prefix}@${year}`)
+  }
+
+  const generatePassword = () => {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789!@#$'
+    let pwd = ''
+    for (let i = 0; i < 10; i++) {
+      pwd += chars.charAt(Math.floor(Math.random() * chars.length))
     }
+    setTempPassword(pwd)
   }
 
   const handleApproveSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!selectedReq) return
-
-    if (!tempPassword || tempPassword.length < 6) {
-      alert("Password must be at least 6 characters.")
-      return
-    }
+    if (!selectedReq || !tempPassword) return
 
     setLoading(true)
     try {
@@ -89,7 +83,7 @@ export default function SuperAdminResetsClient({
 
       const data = await res.json()
       if (!res.ok) {
-        alert(data.error || 'Failed to approve request')
+        alert(data.error || 'Failed to resolve request')
       } else {
         const approvedItem: ResetItem = {
           ...selectedReq,
@@ -101,26 +95,24 @@ export default function SuperAdminResetsClient({
         setResolved(prev => [approvedItem, ...prev])
         setNotice({
           type: 'success',
-          text: `Password updated for ${selectedReq.user.name} (${selectedReq.user.email}).`,
+          text: `Password reset successfully for ${selectedReq.user.name} (${selectedReq.user.email}).`,
           password: tempPassword
         })
         setSelectedReq(null)
-        setTempPassword('')
       }
-    } catch (err) {
+    } catch {
       alert('Network error while resolving request.')
     } finally {
       setLoading(false)
     }
   }
 
-  const handleReject = async (req: ResetItem) => {
-    const confirmReject = window.confirm(`Decline password reset request for ${req.user.name} (${req.user.email})?`)
-    if (!confirmReject) return
+  const handleConfirmReject = async () => {
+    if (!declineTarget) return
 
     setLoading(true)
     try {
-      const res = await fetch(`/api/password-reset-requests/${req.id}`, {
+      const res = await fetch(`/api/password-reset-requests/${declineTarget.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -133,19 +125,20 @@ export default function SuperAdminResetsClient({
         alert(data.error || 'Failed to reject request')
       } else {
         const rejectedItem: ResetItem = {
-          ...req,
+          ...declineTarget,
           status: 'REJECTED',
           resolvedAt: new Date().toISOString(),
           resolvedBy: { name: 'Super Admin', email: '', role: 'SUPER_ADMIN' }
         }
-        setPending(prev => prev.filter(r => r.id !== req.id))
+        setPending(prev => prev.filter(r => r.id !== declineTarget.id))
         setResolved(prev => [rejectedItem, ...prev])
         setNotice({
           type: 'success',
-          text: `Password reset request rejected for ${req.user.name}.`
+          text: `Password reset request rejected for ${declineTarget.user.name}.`
         })
+        setDeclineTarget(null)
       }
-    } catch (err) {
+    } catch {
       alert('Network error while rejecting request.')
     } finally {
       setLoading(false)
@@ -383,7 +376,8 @@ export default function SuperAdminResetsClient({
                         Reset Password →
                       </button>
                       <button
-                        onClick={() => handleReject(req)}
+                        type="button"
+                        onClick={() => setDeclineTarget(req)}
                         style={{
                           padding: '0.45rem 0.85rem',
                           background: 'transparent',
@@ -395,7 +389,7 @@ export default function SuperAdminResetsClient({
                           cursor: 'pointer'
                         }}
                       >
-                        ✕ Reject
+                        Decline
                       </button>
                     </div>
                   </td>
@@ -518,6 +512,95 @@ export default function SuperAdminResetsClient({
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Decline Password Reset Confirmation Modal */}
+      {declineTarget && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.85)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999,
+          padding: '1rem'
+        }}>
+          <div style={{
+            background: 'var(--bg-card)',
+            border: '1px solid rgba(239, 68, 68, 0.5)',
+            maxWidth: '480px',
+            width: '100%',
+            padding: '2.25rem'
+          }}>
+            <div style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.7rem',
+              color: '#ef4444',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              marginBottom: '0.5rem'
+            }}>
+              [DECLINE PASSWORD RESET REQUEST]
+            </div>
+            <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.4rem', color: '#ffffff', marginBottom: '0.75rem' }}>
+              Decline reset request?
+            </h3>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1.25rem', lineHeight: 1.6 }}>
+              Are you sure you want to decline the password reset request for <strong style={{ color: '#ffffff' }}>{declineTarget.user.name}</strong> ({declineTarget.user.email})?
+            </p>
+            <div style={{
+              background: 'rgba(239, 68, 68, 0.08)',
+              borderLeft: '2px solid #ef4444',
+              padding: '0.875rem 1rem',
+              marginBottom: '1.5rem',
+              fontSize: '0.78rem',
+              color: 'var(--text-secondary)',
+              lineHeight: 1.6
+            }}>
+              The user will not be issued a temporary password, and the request will be moved to the resolved archive as declined.
+            </div>
+
+            <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end' }}>
+              <button
+                type="button"
+                onClick={() => setDeclineTarget(null)}
+                disabled={loading}
+                style={{
+                  padding: '0.6rem 1.25rem',
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.75rem',
+                  background: 'transparent',
+                  border: '1px solid var(--border-strong)',
+                  color: 'var(--text-secondary)',
+                  cursor: 'pointer'
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmReject}
+                disabled={loading}
+                style={{
+                  padding: '0.6rem 1.25rem',
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.75rem',
+                  background: '#ef4444',
+                  border: '1px solid #ef4444',
+                  color: '#ffffff',
+                  fontWeight: 700,
+                  cursor: loading ? 'wait' : 'pointer'
+                }}
+              >
+                {loading ? 'Declining...' : 'Confirm Decline'}
+              </button>
+            </div>
           </div>
         </div>
       )}
