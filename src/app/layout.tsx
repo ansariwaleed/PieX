@@ -43,10 +43,10 @@ export default async function RootLayout({
   const session = await auth();
   const user = session?.user
     ? {
-        name: session.user.name,
-        email: session.user.email,
-        role: (session.user as any).role,
-      }
+      name: session.user.name,
+      email: session.user.email,
+      role: (session.user as any).role,
+    }
     : null;
 
   return (

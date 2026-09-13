@@ -625,12 +625,15 @@
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
+
   .parametersBar {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .stickySidebar {
     position: static;
   }
+
   .relatedGrid {
     grid-template-columns: 1fr;
   }

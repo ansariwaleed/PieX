@@ -406,9 +406,11 @@
   .spotlightCard {
     grid-template-columns: 1fr;
   }
+
   .grid {
     grid-template-columns: 1fr;
   }
+
   .filterBar {
     flex-direction: column;
   }

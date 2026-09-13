@@ -3,7 +3,7 @@
   border-bottom: 1px solid var(--border);
   position: relative;
   overflow: hidden;
-  background: 
+  background:
     radial-gradient(ellipse 650px 480px at 95% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 65%),
     radial-gradient(circle 500px at 5% 95%, rgba(254, 240, 138, 0.03) 0%, transparent 65%),
     #08090b;
@@ -373,6 +373,7 @@
   .statsRow {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .statItem:nth-child(2) {
     border-right: none;
   }
@@ -382,11 +383,13 @@
   .statsRow {
     grid-template-columns: 1fr;
   }
+
   .statItem {
     border-right: none;
     border-bottom: 1px solid var(--border);
     padding: 1.5rem 0;
   }
+
   .grid {
     grid-template-columns: 1fr;
   }

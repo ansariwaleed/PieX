@@ -14,7 +14,7 @@
   --accent: #d4af37;
   --accent-hover: #e2c258;
   --accent-dim: rgba(212, 175, 55, 0.15);
-  
+
   --silver: #e2e4e9;
   --silver-dim: rgba(255, 255, 255, 0.08);
 
@@ -52,7 +52,8 @@
   margin: 0;
 }
 
-html, body {
+html,
+body {
   max-width: 100vw;
   overflow-x: hidden;
   background: var(--bg-primary);
@@ -102,7 +103,9 @@ button {
   color: inherit;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
   font-family: inherit;
   color: inherit;
 }
