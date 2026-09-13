@@ -51,11 +51,16 @@ export default async function Home() {
           </p>
 
           <form action="/explore" method="GET" className={styles.searchContainer}>
-            <div className={styles.searchIcon}>Search</div>
+            <span className={styles.searchIcon} aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            </span>
             <input
               type="text"
               name="company"
-              placeholder="Search companies, roles, or topics (e.g. Google, SDE, System Design)..."
+              placeholder="Search companies, roles, or topics..."
               className={styles.searchInput}
               id="hero-search"
             />
@@ -71,7 +76,7 @@ export default async function Home() {
                 {c.name}
               </Link>
             ))}
-            <Link href="/explore?q=system+design" className={styles.tag} style={{ color: 'var(--accent)', borderColor: 'rgba(212, 175, 55, 0.3)' }}>
+            <Link href="/explore?q=system+design" className={styles.tag}>
               System Design
             </Link>
           </div>
@@ -82,7 +87,7 @@ export default async function Home() {
       <div className="container">
         <div className={styles.statsRow}>
           <div className={styles.statItem}>
-            <div className={styles.statNumber} style={{ color: 'var(--accent)' }}>{expCount > 0 ? `${expCount}` : '0'}</div>
+            <div className={styles.statNumber}>{expCount > 0 ? `${expCount}` : '0'}</div>
             <div className={styles.statLabel}>Verified Student Stories</div>
           </div>
           <div className={styles.statItem}>
@@ -94,7 +99,7 @@ export default async function Home() {
             <div className={styles.statLabel}>Colleges & Campuses</div>
           </div>
           <div className={styles.statItem}>
-            <div className={styles.statNumber} style={{ color: '#34d399' }}>100%</div>
+            <div className={styles.statNumber}>100%</div>
             <div className={styles.statLabel}>TPC Verified Records</div>
           </div>
         </div>

@@ -641,14 +641,21 @@
 
 @media (max-width: 768px) {
   .readingContainer {
-    padding: 0 0.5rem 4rem;
+    padding: 0 1rem 4rem;
   }
 
   .topNavRow {
     padding: 1.25rem 0 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     flex-wrap: wrap;
     gap: 0.75rem;
+  }
+
+  .kickerRow {
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    font-size: 0.68rem;
+    margin-bottom: 0.75rem;
   }
 
   .articleTitle {
@@ -660,16 +667,36 @@
   .articleSubtitle {
     font-size: 0.95rem;
     line-height: 1.6;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .parametersBar {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    background: transparent;
+    border: none;
     margin-bottom: 1.5rem;
+    border-radius: 0;
   }
 
   .paramBox {
-    padding: 1rem 1.15rem;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem 1rem;
+  }
+
+  .paramBox:last-child {
+    grid-column: span 2;
+  }
+
+  .paramLabel {
+    font-size: 0.68rem;
+  }
+
+  .paramValue {
+    font-size: 0.875rem;
   }
 
   .verifiedBanner {
@@ -677,7 +704,7 @@
     align-items: flex-start;
     gap: 0.75rem;
     padding: 1.15rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.75rem;
   }
 
   .strategicAdviceBanner {

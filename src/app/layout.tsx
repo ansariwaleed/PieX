@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Cormorant_Garamond, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Lora, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import styles from "./layout.module.css";
@@ -9,9 +9,9 @@ import UserNav from "@/components/UserNav";
 import SessionWrapper from "@/components/SessionWrapper";
 import NavigationProgressBar from "@/components/NavigationProgressBar";
 
-const cormorant = Cormorant_Garamond({
+const lora = Lora({
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-serif",
   display: "swap",
 });
@@ -50,7 +50,7 @@ export default async function RootLayout({
     : null;
 
   return (
-    <html lang="en" className={`${cormorant.variable} ${jakarta.variable} ${jbMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${lora.variable} ${jakarta.variable} ${jbMono.variable}`} suppressHydrationWarning>
       <body suppressHydrationWarning>
         <Suspense fallback={null}>
           <NavigationProgressBar />

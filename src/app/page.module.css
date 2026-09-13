@@ -1,41 +1,22 @@
+/* ——— Editorial Hero ——— */
 .hero {
-  padding: 5.5rem 0 4rem;
+  padding: 5rem 0 3.5rem;
   border-bottom: 1px solid var(--border);
   position: relative;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse 650px 480px at 95% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 65%),
-    radial-gradient(circle 500px at 5% 95%, rgba(254, 240, 138, 0.03) 0%, transparent 65%),
-    #08090b;
-}
-
-.hero::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 50vw;
-  height: 100%;
-  background-image: url('/art/floral-blur.jpg');
-  background-size: cover;
-  background-position: center 30%;
-  opacity: 0.09;
-  filter: blur(2px) grayscale(0.15) contrast(1.1);
-  mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.9) 0%, transparent 85%), linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.9) 0%, transparent 85%), linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, transparent 100%);
-  mask-composite: intersect;
-  -webkit-mask-composite: source-in;
-  pointer-events: none;
-  z-index: 1;
+  background: 
+    radial-gradient(ellipse 700px 500px at 90% 15%, rgba(212, 175, 55, 0.07) 0%, transparent 70%),
+    radial-gradient(circle 500px at 10% 90%, rgba(254, 240, 138, 0.03) 0%, transparent 65%),
+    #090a0d;
 }
 
 .heroGrid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 36px 36px;
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
   pointer-events: none;
   z-index: 2;
 }
@@ -49,13 +30,14 @@
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
+  font-weight: 600;
 }
 
 .eyebrow::before {
@@ -64,71 +46,78 @@
   width: 6px;
   height: 6px;
   background: var(--accent);
+  border-radius: 1px;
 }
 
 .title {
   font-family: var(--font-serif);
-  font-size: clamp(3rem, 6.5vw, 5.5rem);
-  font-weight: 400;
-  line-height: 1.05;
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  font-weight: 600;
+  line-height: 1.15;
   letter-spacing: -0.02em;
   color: #ffffff;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .title em {
   font-style: italic;
-  color: #e2e4e9;
-  font-weight: 400;
+  color: var(--accent);
+  font-weight: 600;
 }
 
 .subtitle {
   font-family: var(--font-sans);
-  font-size: clamp(1rem, 1.3vw, 1.25rem);
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
   line-height: 1.7;
   color: var(--text-secondary);
   max-width: 680px;
-  margin-bottom: 2.5rem;
-  font-weight: 300;
+  margin-bottom: 2rem;
+  font-weight: 400;
 }
 
+/* ——— Integrated Search Container ——— */
 .searchContainer {
   display: flex;
-  align-items: stretch;
-  max-width: 720px;
-  border: 1px solid var(--border-strong);
+  align-items: center;
+  max-width: 680px;
+  height: 54px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
   background: var(--bg-card);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   transition: all 0.25s ease;
   border-radius: var(--radius-md);
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .searchContainer:focus-within {
   border-color: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent), 0 0 24px rgba(212, 175, 55, 0.15);
+  box-shadow: 0 0 0 1px var(--accent), 0 0 24px rgba(212, 175, 55, 0.2);
 }
 
 .searchIcon {
-  padding: 0 1.25rem;
+  padding: 0 1rem 0 1.25rem;
   display: flex;
   align-items: center;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  border-right: 1px solid var(--border);
+  justify-content: center;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.searchIcon svg {
+  width: 18px;
+  height: 18px;
 }
 
 .searchInput {
   flex: 1;
   background: transparent;
   border: none;
-  padding: 1.1rem 1.25rem;
+  padding: 0.85rem 0.5rem;
   color: var(--text-primary);
   font-size: 0.95rem;
   font-family: var(--font-sans);
+  min-width: 0;
 }
 
 .searchInput:focus {
@@ -140,42 +129,30 @@
 }
 
 .searchBtn {
-  background: #ffffff;
+  background: var(--accent);
   color: #08090b;
   border: none;
-  padding: 0 1.75rem;
+  padding: 0 1.5rem;
   font-family: var(--font-sans);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
   cursor: pointer;
   transition: all 0.2s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.searchBtn::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(60deg, transparent 40%, rgba(255, 255, 255, 0.45) 50%, transparent 60%);
-  transform: translateX(-100%);
-  transition: transform 0.6s ease;
-  pointer-events: none;
-}
-
-.searchBtn:hover::after {
-  transform: translateX(100%);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .searchBtn:hover {
-  background: var(--accent);
-  color: #08090b;
+  background: var(--accent-hover);
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.35);
 }
 
+/* ——— Tags Carousel ——— */
 .tags {
   display: flex;
   align-items: center;
@@ -185,22 +162,24 @@
 
 .tagLabel {
   font-family: var(--font-sans);
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
   letter-spacing: 0.02em;
-  margin-right: 0.5rem;
+  margin-right: 0.35rem;
+  font-weight: 500;
 }
 
 .tag {
   font-family: var(--font-sans);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
+  font-weight: 500;
   color: var(--text-secondary);
-  background: rgba(22, 24, 33, 0.8);
-  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 0.35rem 0.85rem;
   transition: all 0.2s ease;
   border-radius: var(--radius-sm);
-  letter-spacing: 0.01em;
+  text-decoration: none;
 }
 
 .tag:hover {
@@ -210,20 +189,24 @@
   transform: translateY(-1px);
 }
 
-/* ——————————————————————— Stats Grid ——————————————————————— */
+/* ——— Metrics HUD Grid ——— */
 .statsRow {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.015);
 }
 
 .statItem {
-  padding: 2.5rem 1.5rem;
+  padding: 2.5rem 1.75rem;
   border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .statItem:first-child {
-  padding-left: 0;
+  padding-left: 0.5rem;
 }
 
 .statItem:last-child {
@@ -231,22 +214,24 @@
 }
 
 .statNumber {
-  font-family: var(--font-serif);
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
-  font-weight: 400;
+  font-family: var(--font-sans);
+  font-size: clamp(2.25rem, 3.5vw, 3.25rem);
+  font-weight: 700;
   line-height: 1;
   color: #ffffff;
   margin-bottom: 0.5rem;
+  letter-spacing: -0.03em;
 }
 
 .statLabel {
   font-family: var(--font-sans);
-  font-size: 0.825rem;
-  color: var(--text-muted);
-  letter-spacing: 0.02em;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  letter-spacing: 0.01em;
 }
 
-/* ——————————————————————— Section Header ——————————————————————— */
+/* ——— Section Header ——— */
 .sectionHeader {
   display: flex;
   justify-content: space-between;
@@ -257,27 +242,28 @@
 .sectionTitle {
   font-family: var(--font-serif);
   font-size: 2.25rem;
-  font-weight: 400;
+  font-weight: 600;
   color: #ffffff;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 
 .sectionLink {
   font-family: var(--font-sans);
-  font-size: 0.825rem;
-  font-weight: 500;
+  font-size: 0.85rem;
+  font-weight: 600;
   color: var(--accent);
   display: flex;
   align-items: center;
   gap: 0.5rem;
   transition: color 0.2s;
+  text-decoration: none;
 }
 
 .sectionLink:hover {
   color: var(--accent-hover);
 }
 
-/* ——————————————————————— Editorial Stories Grid ——————————————————————— */
+/* ——— Editorial Stories Grid ——— */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
@@ -314,8 +300,8 @@
   font-family: var(--font-sans);
   font-size: 0.78rem;
   color: var(--text-muted);
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.85rem;
   border-bottom: 1px solid var(--border);
 }
 
@@ -369,7 +355,7 @@
   letter-spacing: 0.02em;
 }
 
-/* ——————————————————————— Responsive Breakpoints ——————————————————————— */
+/* ——— Responsive Adjustments ——— */
 @media (max-width: 900px) {
   .statsRow {
     grid-template-columns: repeat(2, 1fr);
@@ -382,31 +368,31 @@
 
 @media (max-width: 768px) {
   .hero {
-    padding: 3.5rem 0 2.5rem;
+    padding: 3rem 0 2rem;
   }
 
   .eyebrow {
     font-size: 0.7rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
   }
 
   .title {
-    font-size: clamp(2rem, 7.5vw, 2.75rem);
-    line-height: 1.18;
-    margin-bottom: 1rem;
+    font-size: clamp(2rem, 7vw, 2.75rem);
+    line-height: 1.2;
+    margin-bottom: 0.85rem;
   }
 
   .subtitle {
     font-size: 0.95rem;
     line-height: 1.6;
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.5rem;
   }
 
   .sectionHeader {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.75rem;
-    padding: 2.5rem 0 1.25rem;
+    gap: 0.5rem;
+    padding: 2.25rem 0 1.25rem;
   }
 
   .sectionTitle {
@@ -421,24 +407,82 @@
 }
 
 @media (max-width: 640px) {
-  /* Sleek 2x2 Metrics Grid on mobile */
+  /* Sleek mobile pill search bar */
+  .searchContainer {
+    height: 48px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    padding: 0.25rem 0.35rem 0.25rem 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .searchIcon {
+    padding: 0 0.35rem 0 0;
+  }
+
+  .searchIcon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .searchInput {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .searchInput::placeholder {
+    font-size: 0.8rem;
+  }
+
+  .searchBtn {
+    border-radius: 9999px;
+    padding: 0 1rem;
+    font-size: 0.78rem;
+    height: 38px;
+  }
+
+  /* Horizontal swipeable tags carousel */
+  .tags {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    gap: 0.4rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .tags::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tagLabel {
+    flex-shrink: 0;
+    font-size: 0.72rem;
+  }
+
+  .tag {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 9999px;
+  }
+
+  /* Elevated 2x2 metric tiles */
   .statsRow {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+    border-bottom: none;
+    background: transparent;
+    padding: 1rem 0;
   }
 
   .statItem {
-    padding: 1.5rem 1rem;
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .statItem:nth-child(2n) {
-    border-right: none;
-  }
-
-  .statItem:nth-child(3),
-  .statItem:nth-child(4) {
-    border-bottom: none;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    padding: 1.15rem 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   }
 
   .statItem:first-child {
@@ -446,46 +490,30 @@
   }
 
   .statNumber {
-    font-size: 2.15rem;
-    margin-bottom: 0.35rem;
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
   }
 
   .statLabel {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
+    line-height: 1.35;
   }
 
-  .tags {
-    gap: 0.4rem;
+  /* Mobile feed cards: horizontal round pills */
+  .companyName {
+    font-size: 1.35rem;
   }
 
-  .tagLabel {
-    width: 100%;
-    margin-bottom: 0.2rem;
+  .journeySteps {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
   }
 
-  .tag {
-    font-size: 0.75rem;
-    padding: 0.3rem 0.65rem;
-  }
-}
-
-@media (max-width: 520px) {
-  .searchContainer {
-    flex-direction: column;
-  }
-
-  .searchIcon {
-    display: none;
-  }
-
-  .searchInput {
-    padding: 0.85rem 1rem;
-    font-size: 0.875rem;
-  }
-
-  .searchBtn {
-    padding: 0.85rem 1rem;
-    width: 100%;
-    justify-content: center;
+  .step {
+    padding: 0.25rem 0.55rem;
+    font-size: 0.72rem;
+    gap: 0.35rem;
   }
 }
