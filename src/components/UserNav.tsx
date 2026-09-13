@@ -17,7 +17,7 @@ export default function UserNav({ user }: UserNavProps) {
     return (
       <div className={styles.navLinks}>
         <Link href="/explore" className={styles.link}>Explore</Link>
-        <Link href="/submit" className={styles.link}>Submit</Link>
+        <Link href="/submit" className={styles.link}>Share Experience</Link>
         <Link href="/login" className={styles.loginBtn}>Sign In</Link>
       </div>
     )
@@ -32,35 +32,30 @@ export default function UserNav({ user }: UserNavProps) {
     <div className={styles.navLinks}>
       <Link href="/explore" className={styles.link}>Explore</Link>
       
-      {/* Submit button is STRICTLY for students! Hidden for TPC and Super Admin */}
+      {/* Submit button is for students to share experiences */}
       {isStudent && (
-        <Link href="/submit" className={styles.link}>Submit</Link>
+        <Link href="/submit" className={styles.link}>Share Experience</Link>
       )}
 
-      {/* TPC Admin Quick Link */}
+      {/* TPC Officer Experience Management */}
       {isTPCAdmin && (
         <Link href="/admin" className={styles.link} style={{ color: 'var(--accent)', fontWeight: 600 }}>
-          TPC Console //
+          Manage Experiences
         </Link>
       )}
 
-      {/* Super Admin Quick Link */}
+      {/* Super Admin Experience Management */}
       {isSuperAdmin && (
-        <Link href="/super-admin" className={styles.link} style={{ color: 'var(--accent)', fontWeight: 600 }}>
-          Super Admin Console //
+        <Link href="/super-admin/experiences" className={styles.link} style={{ color: 'var(--accent)', fontWeight: 600 }}>
+          All Experiences
         </Link>
       )}
 
-      {/* Student Campus Hub & My Submissions */}
+      {/* Student My Submissions */}
       {isStudent && (
-        <>
-          <Link href="/dashboard" className={styles.link} style={{ color: 'var(--accent)', fontWeight: 600 }}>
-            Campus Hub
-          </Link>
-          <Link href="/my-submissions" className={styles.link}>
-            My Submissions
-          </Link>
-        </>
+        <Link href="/my-submissions" className={styles.link}>
+          My Submissions
+        </Link>
       )}
 
       <div className={styles.userPill}>

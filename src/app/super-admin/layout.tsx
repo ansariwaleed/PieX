@@ -55,59 +55,32 @@ export default async function SuperAdminLayout({
           <ul className={styles.navList}>
             <li>
               <Link href="/super-admin" className={styles.navItem}>
-                <span className={styles.navIndex}>01 //</span>
+                <span className={styles.navIndex}>01</span>
                 <span>Overview</span>
               </Link>
             </li>
             <li>
+              <Link href="/super-admin/experiences" className={styles.navItem}>
+                <span className={styles.navIndex}>02</span>
+                <span>Placement Experiences</span>
+              </Link>
+            </li>
+            <li>
               <Link href="/super-admin/tpc" className={styles.navItem}>
-                <span className={styles.navIndex}>02 //</span>
+                <span className={styles.navIndex}>03</span>
                 <span>TPC Officers</span>
                 <span className={styles.navBadge}>{tpcCount}</span>
               </Link>
             </li>
-            <li>
-              <Link href="/super-admin/students" className={styles.navItem}>
-                <span className={styles.navIndex}>03 //</span>
-                <span>Students Roster</span>
-                <span className={styles.navBadge}>{studentCount}</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/super-admin/resets" className={styles.navItem}>
-                <span className={styles.navIndex}>04 //</span>
-                <span>Password Resets</span>
-                {pendingResetsCount > 0 ? (
-                  <span className={styles.navBadge} style={{ background: '#eab308', color: '#08090b', borderColor: '#eab308' }}>
-                    {pendingResetsCount}
-                  </span>
-                ) : (
-                  <span className={styles.navBadge}>0</span>
-                )}
-              </Link>
-            </li>
-            <li>
-              <Link href="/super-admin/campuses" className={styles.navItem}>
-                <span className={styles.navIndex}>05 //</span>
-                <span>Campuses</span>
-                <span className={styles.navBadge}>{campusCount}</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/super-admin/experiences" className={styles.navItem}>
-                <span className={styles.navIndex}>06 //</span>
-                <span>All Experiences</span>
-              </Link>
-            </li>
             <li style={{ marginTop: '2rem', borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
               <Link href="/admin" className={styles.navItem} style={{ color: 'var(--text-muted)' }}>
-                <span className={styles.navIndex}>//</span>
-                <span>TPC Admin View</span>
+                <span className={styles.navIndex}>✦</span>
+                <span>TPC Review Console</span>
               </Link>
             </li>
             <li>
               <Link href="/" className={styles.navItem} style={{ color: 'var(--text-muted)' }}>
-                <span className={styles.navIndex}>← //</span>
+                <span className={styles.navIndex}>←</span>
                 <span>Exit to Main Site</span>
               </Link>
             </li>

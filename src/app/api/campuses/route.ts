@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server"
-import { prisma } from "@/lib/prisma"
+import { getCachedCampuses } from "@/lib/data-cache"
 
 export async function GET() {
   try {
-    const campuses = await prisma.campus.findMany({
-      where: { status: 'ACTIVE' },
-      select: { id: true, name: true, location: true },
-      orderBy: { name: 'asc' }
+    const campuses = await getCachedCampuses()
+    return NextResponse.json(campuses, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400'
+      }
     })
-    return NextResponse.json(campuses)
   } catch (error) {
     return NextResponse.json({ error: "Failed to fetch campuses" }, { status: 500 })
   }

@@ -17,7 +17,10 @@
   height: 100%;
   overflow-y: auto;
   position: relative;
-  background: radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.03) 0%, transparent 60%), #08090b;
+  background: 
+    radial-gradient(ellipse at 15% 15%, rgba(212, 175, 55, 0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 85%, rgba(254, 240, 138, 0.03) 0%, transparent 60%),
+    #08090b;
 }
 
 .formCard {

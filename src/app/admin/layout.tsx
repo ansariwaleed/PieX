@@ -115,55 +115,32 @@ export default async function AdminLayout({
           <li>
             <Link href="/admin" className={styles.navItem}>
               <span className={styles.navIcon}>01</span>
-              Dashboard
+              Placement Experiences
             </Link>
           </li>
           <li>
             <Link href="/admin/pending" className={styles.navItem}>
               <span className={styles.navIcon}>02</span>
-              Pending Reviews
+              Pending Verification
               {pendingCount > 0 && <span className={styles.navBadge}>{pendingCount}</span>}
             </Link>
           </li>
           <li>
-            <Link href="/admin/students" className={styles.navItem}>
-              <span className={styles.navIcon}>03</span>
-              Student Roster
-            </Link>
-          </li>
-          <li>
-            <Link href="/admin/resets" className={styles.navItem}>
-              <span className={styles.navIcon}>04</span>
-              Password Resets
-              {pendingResetsCount > 0 && (
-                <span className={styles.navBadge} style={{ background: '#eab308', color: '#08090b', borderColor: '#eab308' }}>
-                  {pendingResetsCount}
-                </span>
-              )}
-            </Link>
-          </li>
-          <li>
-            <Link href="/admin/companies" className={styles.navItem}>
-              <span className={styles.navIcon}>05</span>
-              Visiting Companies
-            </Link>
-          </li>
-          <li>
             <Link href="/admin/analytics" className={styles.navItem}>
-              <span className={styles.navIcon}>06</span>
+              <span className={styles.navIcon}>03</span>
               Placement Intelligence
             </Link>
           </li>
           <li>
-            <Link href="/admin/reports" className={styles.navItem}>
-              <span className={styles.navIcon}>07</span>
-              Reports & Flagged
+            <Link href="/admin/companies" className={styles.navItem}>
+              <span className={styles.navIcon}>04</span>
+              Visiting Companies
             </Link>
           </li>
-          <li>
-            <Link href="/admin/settings" className={styles.navItem}>
-              <span className={styles.navIcon}>08</span>
-              Campus Settings
+          <li style={{ marginTop: '2rem', borderTop: '1px solid var(--border)', paddingTop: '1rem' }}>
+            <Link href="/explore" className={styles.navItem} style={{ color: 'var(--text-muted)' }}>
+              <span className={styles.navIcon}>←</span>
+              Public Archives
             </Link>
           </li>
         </ul>

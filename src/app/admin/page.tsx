@@ -42,15 +42,15 @@ export default async function AdminDashboard({
   const driveCampusFilter = activeCampusId ? { drive: { campusId: activeCampusId } } : {}
 
   const [
-    totalStudents,
     totalDrives,
     totalExperiences,
+    verifiedCount,
     pendingCount,
     allExperiences
   ] = await Promise.all([
-    prisma.user.count({ where: { role: 'STUDENT', ...campusFilter } }),
     prisma.placementDrive.count({ where: campusFilter }),
     prisma.experience.count({ where: driveCampusFilter }),
+    prisma.experience.count({ where: { verificationStatus: 'VERIFIED', ...driveCampusFilter } }),
     prisma.experience.count({ where: { verificationStatus: 'PENDING', ...driveCampusFilter } }),
     prisma.experience.findMany({
       where: driveCampusFilter,
@@ -99,24 +99,26 @@ export default async function AdminDashboard({
           justifyContent: 'space-between',
           alignItems: 'center',
           flexWrap: 'wrap',
-          gap: '1rem'
+          gap: '1rem',
+          borderRadius: 'var(--radius-md)'
         }}>
           <div>
             <div style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.68rem',
+              fontFamily: 'var(--font-sans)',
+              fontSize: '0.72rem',
+              fontWeight: 700,
               color: 'var(--accent)',
-              letterSpacing: '0.1em',
+              letterSpacing: '0.08em',
               textTransform: 'uppercase',
               marginBottom: '0.25rem'
             }}>
-              SUPER ADMIN AUDIT // VIEWING AS COLLEGE TPC OFFICER
+              Super Admin View · Managing Campus
             </div>
             <div style={{ fontSize: '1.15rem', fontWeight: 600, color: '#ffffff' }}>
-              {activeCampus.name} Placement Cell
+              {activeCampus.name} Placement Archive
             </div>
             <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-              Location: {activeCampus.location} · Operating in Official Campus Mode
+              Location: {activeCampus.location} · Reviewing verified records
             </div>
           </div>
 
@@ -126,55 +128,54 @@ export default async function AdminDashboard({
               currentCampusId={activeCampus.id}
             />
             <Link
-              href="/super-admin/campuses"
+              href="/super-admin/experiences"
               style={{
                 padding: '0.45rem 0.85rem',
                 background: 'transparent',
                 border: '1px solid var(--border-strong)',
                 color: 'var(--text-secondary)',
-                fontFamily: 'var(--font-mono)',
-                fontSize: '0.72rem',
-                textDecoration: 'none',
-                textTransform: 'uppercase',
-                letterSpacing: '0.06em'
+                fontFamily: 'var(--font-sans)',
+                fontSize: '0.75rem',
+                borderRadius: 'var(--radius-sm)',
+                textDecoration: 'none'
               }}
             >
-              ← All Campuses
+              ← All Platform Experiences
             </Link>
           </div>
         </div>
       )}
 
       <h1 className={styles.pageTitle}>
-        {activeCampus ? `${activeCampus.name} Placement Cell` : 'Dashboard'}
+        {activeCampus ? `${activeCampus.name} Placement Cell` : 'Placement Experiences Console'}
       </h1>
       <p className={styles.pageSubtitle}>
-        Placement 2026 — Official Recruitment Intelligence & Candidate Verification
+        Review, verify, and manage candidate interview debriefs from official campus recruitment drives
       </p>
 
-      {/* Stats Scoped to this Campus */}
+      {/* Experience-Centric Stats */}
       <div className={styles.statsGrid}>
         <div className={styles.statCard}>
-          <div className={styles.statIcon}>[STUDENTS]</div>
-          <div className={styles.statValue}>{totalStudents}</div>
-          <div className={styles.statLabel}>Enrolled at {activeCampus?.name || 'Campus'}</div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statIcon}>[DRIVES]</div>
-          <div className={styles.statValue}>{totalDrives}</div>
-          <div className={styles.statLabel}>Campus Placement Drives</div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statIcon}>[STORIES]</div>
+          <div className={styles.statIcon}>Submissions</div>
           <div className={styles.statValue}>{totalExperiences}</div>
-          <div className={styles.statLabel}>Total Experiences</div>
+          <div className={styles.statLabel}>Total Submitted Debriefs</div>
         </div>
         <div className={styles.statCard}>
-          <div className={styles.statIcon}>[PENDING]</div>
+          <div className={styles.statIcon}>Verified</div>
+          <div className={styles.statValue} style={{ color: '#34d399' }}>{verifiedCount}</div>
+          <div className={styles.statLabel}>Published & Accredited</div>
+        </div>
+        <div className={styles.statCard}>
+          <div className={styles.statIcon}>Pending</div>
           <div className={styles.statValue} style={pendingCount > 0 ? { color: '#eab308' } : undefined}>
             {pendingCount}
           </div>
           <div className={styles.statLabel}>Awaiting Verification</div>
+        </div>
+        <div className={styles.statCard}>
+          <div className={styles.statIcon}>Recruiters</div>
+          <div className={styles.statValue}>{totalDrives}</div>
+          <div className={styles.statLabel}>Campus Placement Drives</div>
         </div>
       </div>
 

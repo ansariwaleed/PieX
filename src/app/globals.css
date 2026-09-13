@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
-
 :root {
   /* Editorial Noir Palette */
   --bg-primary: #08090b;
@@ -34,16 +32,16 @@
   --border-strong: rgba(255, 255, 255, 0.2);
   --border-hover: rgba(255, 255, 255, 0.3);
 
-  /* STRICTLY NO ROUNDED EDGES / NO PILLS */
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
-  --radius-full: 0px;
+  /* Refined Modern Editorial Radii */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
 
-  --font-serif: 'Cormorant Garamond', Georgia, serif;
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  /* Self-hosted Next.js Typography Variables */
+  --font-serif: var(--font-serif, 'Cormorant Garamond', Georgia, serif);
+  --font-sans: var(--font-sans, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  --font-mono: var(--font-mono, 'JetBrains Mono', monospace);
 
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -52,7 +50,6 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  border-radius: 0 !important; /* Enforce zero rounded edges */
 }
 
 html, body {
@@ -61,9 +58,25 @@ html, body {
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-sans);
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* GPU-accelerated static film texture (zero-repaint cost during continuous scrolling) */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.02;
+  mix-blend-mode: overlay;
+  transform: translateZ(0);
+  will-change: opacity;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* Eliminate scroll on login and registration pages */
@@ -113,6 +126,7 @@ input, select, textarea {
   letter-spacing: 0.08em;
   border: 1px solid var(--border);
   background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
 }
 
 .badge-verified {
@@ -134,9 +148,9 @@ input, select, textarea {
 }
 
 .badge-selected {
-  background: rgba(255, 255, 255, 0.06);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(52, 211, 153, 0.08);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.3);
 }
 
 .badge-not-selected {
@@ -154,15 +168,33 @@ input, select, textarea {
   cursor: pointer;
   display: block;
   position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 0;
+  background: var(--accent);
+  transition: height 0.3s var(--ease-editorial);
+}
+
+.card:hover::before {
+  height: 100%;
 }
 
 .card:hover {
   background: var(--bg-card-hover);
-  border-color: var(--border-strong);
+  border-color: rgba(212, 175, 55, 0.35);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
   transform: translateY(-2px);
 }
 
-/* ——————————————————————— Sharp Rectangular Buttons ——————————————————————— */
+/* ——————————————————————— Soft Precision Buttons ——————————————————————— */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -177,24 +209,49 @@ input, select, textarea {
   transition: all 0.25s var(--ease-editorial);
   cursor: pointer;
   border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
 }
 
 .btn-primary {
   background: #ffffff;
   color: #08090b;
   border: 1px solid #ffffff;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(60deg, transparent 40%, rgba(255, 255, 255, 0.45) 50%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+
+.btn-primary:hover::after {
+  transform: translateX(100%);
 }
 
 .btn-primary:hover {
   background: #d4af37;
   border-color: #d4af37;
   color: #08090b;
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
   background: transparent;
   color: var(--text-primary);
   border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
 }
 
 .btn-secondary:hover {
@@ -206,6 +263,7 @@ input, select, textarea {
   background: var(--success);
   color: #08090b;
   border: 1px solid var(--success);
+  border-radius: var(--radius-md);
 }
 
 .btn-success:hover {
@@ -216,6 +274,7 @@ input, select, textarea {
   background: var(--danger);
   color: #ffffff;
   border: 1px solid var(--danger);
+  border-radius: var(--radius-md);
 }
 
 .btn-danger:hover {
@@ -232,7 +291,7 @@ input, select, textarea {
   font-size: 0.875rem;
 }
 
-/* ——————————————————————— Crisp Monospace Form Inputs ——————————————————————— */
+/* ——————————————————————— Modern Form Inputs ——————————————————————— */
 .input {
   width: 100%;
   padding: 0.875rem 1rem;
@@ -241,11 +300,13 @@ input, select, textarea {
   color: var(--text-primary);
   font-size: 0.9375rem;
   transition: all 0.2s ease;
+  border-radius: var(--radius-md);
 }
 
 .input:focus {
   outline: none;
-  border-color: #ffffff;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 0 16px rgba(212, 175, 55, 0.12);
 }
 
 .input::placeholder {
@@ -271,6 +332,7 @@ input, select, textarea {
   color: var(--text-primary);
   font-size: 0.9375rem;
   transition: all 0.2s ease;
+  border-radius: var(--radius-md);
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%239aa0a9' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -279,7 +341,8 @@ input, select, textarea {
 
 .select:focus {
   outline: none;
-  border-color: #ffffff;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 0 16px rgba(212, 175, 55, 0.12);
 }
 
 textarea,
@@ -296,6 +359,7 @@ textarea.input {
   line-height: 1.6;
   resize: vertical;
   transition: all 0.2s ease;
+  border-radius: var(--radius-md);
   box-sizing: border-box;
 }
 
@@ -303,8 +367,8 @@ textarea:focus,
 .textarea:focus,
 textarea.input:focus {
   outline: none;
-  border-color: #ffffff;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 0 16px rgba(212, 175, 55, 0.12);
 }
 
 textarea::placeholder,

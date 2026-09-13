@@ -340,6 +340,21 @@ export default function SubmitPage() {
       {/* Step 1: Placement Information */}
       {step === 1 && (
         <div className={styles.formCard}>
+          <div style={{
+            background: 'rgba(212, 175, 55, 0.06)',
+            border: '1px solid rgba(212, 175, 55, 0.2)',
+            borderRadius: 'var(--radius-md)',
+            padding: '1rem 1.25rem',
+            marginBottom: '1.75rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.85rem'
+          }}>
+            <span style={{ fontSize: '1.25rem' }}>🌱</span>
+            <div style={{ fontSize: '0.84rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+              <strong style={{ color: '#ffffff' }}>Pay it forward:</strong> Your experience directly helps juniors and batchmates from your campus prepare with clarity, realistic expectations, and confidence.
+            </div>
+          </div>
           <h2 className={styles.formTitle}>Placement Information</h2>
           {/* Company & Role Row */}
           <div className={styles.formRow}>
@@ -576,14 +591,52 @@ export default function SubmitPage() {
               </div>
 
               <div className="form-group">
-                <label className="label">Your Experience / Questions Asked</label>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.4rem' }}>
+                  <label className="label" style={{ marginBottom: 0 }}>Your Experience & Questions Asked</label>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--accent)' }}>Helpful to juniors: share specific questions & edge cases</span>
+                </div>
                 <textarea
-                  className="input"
-                  rows={4}
-                  placeholder="Describe the questions asked, interview atmosphere, approach you used, and any tips..."
+                  className="textarea"
+                  rows={5}
+                  placeholder="Detail the questions asked, coding problems, follow-ups, and how the discussion went. What caught you off guard? What approach worked best?"
                   value={round.description}
                   onChange={e => updateRound(index, 'description', e.target.value)}
                 ></textarea>
+
+                {/* Micro-prompts to inspire rich write-ups */}
+                <div className={styles.promptSuggestions}>
+                  <span className={styles.promptLabel}>Prompt ideas:</span>
+                  <button
+                    type="button"
+                    className={styles.promptChip}
+                    onClick={() => {
+                      const snippet = '\n\n• What caught me off guard: '
+                      updateRound(index, 'description', (round.description || '') + snippet)
+                    }}
+                  >
+                    + What caught you off guard?
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.promptChip}
+                    onClick={() => {
+                      const snippet = '\n\n• Approach & Complexity discussed: '
+                      updateRound(index, 'description', (round.description || '') + snippet)
+                    }}
+                  >
+                    + Approach & complexity
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.promptChip}
+                    onClick={() => {
+                      const snippet = '\n\n• Interviewer hints & feedback: '
+                      updateRound(index, 'description', (round.description || '') + snippet)
+                    }}
+                  >
+                    + Interviewer hints
+                  </button>
+                </div>
               </div>
             </div>
           ))}
@@ -614,7 +667,7 @@ export default function SubmitPage() {
           <div style={{
             background: 'var(--bg-secondary)',
             padding: '1.25rem',
-            borderRadius: '0px',
+            borderRadius: 'var(--radius-md)',
             marginBottom: '1.5rem',
             border: '1px solid var(--border)'
           }}>

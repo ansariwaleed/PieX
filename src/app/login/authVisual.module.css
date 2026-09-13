@@ -1,0 +1,73 @@
+/* ==========================================================================
+   PURE FLORAL VISUAL BACKDROP
+   Static image with Dark Gradient, Fine Grid, and Interactive Hover Glow
+   (No text, no extra boxes, no breathing animation)
+   ========================================================================== */
+
+.showcaseContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  user-select: none;
+  background: #08090b;
+  border-left: 1px solid var(--border-strong);
+  box-sizing: border-box;
+  cursor: crosshair;
+}
+
+/* Background floral image (static, sharp & serene) */
+.imageLayer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/art/floral-blur.jpg');
+  background-size: cover;
+  background-position: center center;
+  filter: brightness(0.72) saturate(1.12) contrast(1.05);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Cinematic dark gradient vignette */
+.vignetteLayer {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(8, 9, 11, 0.15) 0%, rgba(8, 9, 11, 0.6) 65%, rgba(8, 9, 11, 0.9) 100%),
+    linear-gradient(180deg, rgba(8, 9, 11, 0.5) 0%, transparent 35%, transparent 65%, rgba(8, 9, 11, 0.65) 100%),
+    linear-gradient(90deg, rgba(8, 9, 11, 0.6) 0%, transparent 25%, transparent 75%, rgba(8, 9, 11, 0.6) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Fine architectural grid overlay */
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Interactive cursor hover spotlight glow */
+.spotlightLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  transition: opacity 0.3s ease;
+}
+
+@media (max-width: 1024px) {
+  .showcaseContainer {
+    min-height: 480px;
+    border-left: none;
+    border-top: 1px solid var(--border-strong);
+  }
+}

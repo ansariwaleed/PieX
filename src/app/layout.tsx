@@ -1,10 +1,34 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
+import { Cormorant_Garamond, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import styles from "./layout.module.css";
 import { auth } from "@/auth";
 import UserNav from "@/components/UserNav";
 import SessionWrapper from "@/components/SessionWrapper";
+import NavigationProgressBar from "@/components/NavigationProgressBar";
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-serif",
+  display: "swap",
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const jbMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "PieX (πX) — The Placement Experience",
@@ -26,8 +50,11 @@ export default async function RootLayout({
     : null;
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={`${cormorant.variable} ${jakarta.variable} ${jbMono.variable}`} suppressHydrationWarning>
       <body suppressHydrationWarning>
+        <Suspense fallback={null}>
+          <NavigationProgressBar />
+        </Suspense>
         <SessionWrapper session={session}>
           <nav className={styles.navbar}>
             <div className={`container ${styles.navContainer}`}>
@@ -41,9 +68,15 @@ export default async function RootLayout({
           </nav>
           {children}
           <footer className="footer">
-            <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-              <div>PIEX (πX) · THE PLACEMENT EXPERIENCE</div>
-              <div>VERIFIED BY COLLEGE TRAINING & PLACEMENT CELLS (TPC)</div>
+            <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.25rem' }}>
+              <div>
+                <div style={{ fontWeight: 600, color: '#ffffff', letterSpacing: '0.08em', marginBottom: '0.2rem' }}>PIEX (πX) · THE PLACEMENT EXPERIENCE</div>
+                <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>VERIFIED BY COLLEGE TRAINING & PLACEMENT CELLS (TPC) · ED25519 ARCHIVAL AUDIT</div>
+              </div>
+              <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.7rem' }}>
+                <Link href="/explore" style={{ color: 'var(--text-secondary)' }}>Explore Vault</Link>
+                <Link href="/register?role=tpc" style={{ color: 'var(--accent)' }}>Institutional TPC Portal →</Link>
+              </div>
             </div>
           </footer>
         </SessionWrapper>

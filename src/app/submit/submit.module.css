@@ -21,7 +21,7 @@
   letter-spacing: 0.08em;
 }
 
-/* ——— Sharp Steps Indicator ——— */
+/* ——— Refined Steps Indicator ——— */
 .stepsBar {
   display: flex;
   align-items: center;
@@ -29,6 +29,8 @@
   margin-bottom: 3rem;
   border: 1px solid var(--border);
   background: var(--bg-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
 }
 
 .stepIndicator {
@@ -62,17 +64,16 @@
 }
 
 .stepText {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
 }
 
 .stepTextActive {
   composes: stepText;
   color: #ffffff;
+  font-weight: 600;
 }
 
 .stepDivider {
@@ -89,6 +90,7 @@
   border: 1px solid var(--border);
   padding: 2.5rem;
   margin-bottom: 2.5rem;
+  border-radius: var(--radius-md);
 }
 
 .formTitle {
@@ -113,6 +115,7 @@
   border: 1px solid var(--border);
   padding: 1.75rem;
   margin-bottom: 1.5rem;
+  border-radius: var(--radius-md);
 }
 
 .roundHeader {
@@ -167,6 +170,39 @@
 .addRoundBtn:hover {
   border-color: #ffffff;
   background: rgba(255, 255, 255, 0.04);
+}
+
+/* ——— Micro-Prompt Suggestions ——— */
+.promptSuggestions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+}
+
+.promptLabel {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.promptChip {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.promptChip:hover {
+  background: rgba(212, 175, 55, 0.08);
+  border-color: rgba(212, 175, 55, 0.4);
+  color: var(--accent);
 }
 
 /* ——— Actions ——— */

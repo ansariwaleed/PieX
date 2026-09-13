@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import styles from './register.module.css'
-import RegisterAsciiArt from './RegisterAsciiArt'
+import AuthVisualShowcase from '../login/AuthVisualShowcase'
 
 interface Campus {
   id: string
@@ -431,9 +431,9 @@ function RegisterForm() {
         </div>
       </div>
 
-      {/* Right Column: ASCII Topology Artwork */}
+      {/* Right Column: Luminous Botanical Showcase / Terminal */}
       <div className={styles.interactiveSection}>
-        <RegisterAsciiArt />
+        <AuthVisualShowcase variant="register" />
       </div>
     </div>
   )

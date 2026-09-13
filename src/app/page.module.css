@@ -1,10 +1,48 @@
 .hero {
-  padding: 5rem 0 3.5rem;
+  padding: 5.5rem 0 4rem;
   border-bottom: 1px solid var(--border);
   position: relative;
+  overflow: hidden;
+  background: 
+    radial-gradient(ellipse 650px 480px at 95% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 65%),
+    radial-gradient(circle 500px at 5% 95%, rgba(254, 240, 138, 0.03) 0%, transparent 65%),
+    #08090b;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50vw;
+  height: 100%;
+  background-image: url('/art/floral-blur.jpg');
+  background-size: cover;
+  background-position: center 30%;
+  opacity: 0.09;
+  filter: blur(2px) grayscale(0.15) contrast(1.1);
+  mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.9) 0%, transparent 85%), linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.9) 0%, transparent 85%), linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.heroGrid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 36px 36px;
+  pointer-events: none;
+  z-index: 2;
 }
 
 .heroContent {
+  position: relative;
+  z-index: 3;
   max-width: 960px;
 }
 
@@ -60,7 +98,15 @@
   max-width: 720px;
   border: 1px solid var(--border-strong);
   background: var(--bg-card);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.25s ease;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.searchContainer:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 0 24px rgba(212, 175, 55, 0.15);
 }
 
 .searchIcon {
@@ -98,13 +144,31 @@
   color: #08090b;
   border: none;
   padding: 0 1.75rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   cursor: pointer;
   transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.searchBtn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(60deg, transparent 40%, rgba(255, 255, 255, 0.45) 50%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+
+.searchBtn:hover::after {
+  transform: translateX(100%);
 }
 
 .searchBtn:hover {
@@ -120,29 +184,30 @@
 }
 
 .tagLabel {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
   color: var(--text-muted);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
   margin-right: 0.5rem;
 }
 
 .tag {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
   color: var(--text-secondary);
-  background: var(--bg-card);
+  background: rgba(22, 24, 33, 0.8);
   border: 1px solid var(--border);
-  padding: 0.4rem 0.8rem;
+  padding: 0.35rem 0.85rem;
   transition: all 0.2s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.01em;
 }
 
 .tag:hover {
   color: #ffffff;
-  border-color: #ffffff;
+  border-color: var(--accent);
+  background: rgba(212, 175, 55, 0.08);
+  transform: translateY(-1px);
 }
 
 /* ——————————————————————— Stats Grid ——————————————————————— */
@@ -175,11 +240,10 @@
 }
 
 .statLabel {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-family: var(--font-sans);
+  font-size: 0.825rem;
   color: var(--text-muted);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 /* ——————————————————————— Section Header ——————————————————————— */
@@ -199,11 +263,10 @@
 }
 
 .sectionLink {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: var(--accent);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -211,16 +274,15 @@
 }
 
 .sectionLink:hover {
-  color: #ffffff;
+  color: var(--accent-hover);
 }
 
-/* ——————————————————————— Editorial Dossier Grid ——————————————————————— */
+/* ——————————————————————— Editorial Stories Grid ——————————————————————— */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
+  gap: 1.5rem;
+  margin-bottom: 3.5rem;
 }
 
 .cardTop {
@@ -249,11 +311,9 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--border);
@@ -274,14 +334,20 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
   color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.75rem;
 }
 
 .stepIndex {
   color: var(--accent);
+  font-family: var(--font-mono);
   font-weight: 600;
+  font-size: 0.72rem;
 }
 
 .stepLabel {
@@ -297,11 +363,10 @@
 }
 
 .cardStats {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
 }
 
 @media (max-width: 900px) {

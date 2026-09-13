@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useTransition } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import styles from './exploreFilters.module.css'
 
@@ -23,6 +23,7 @@ export default function ExploreFilters({
 }: ExploreFiltersProps) {
   const router = useRouter()
   const pathname = usePathname()
+  const [isPending, startTransition] = useTransition()
 
   // Expanded panel toggle
   const [isExpanded, setIsExpanded] = useState(false)
@@ -52,7 +53,7 @@ export default function ExploreFilters({
     currentFilters.result
   ].filter(Boolean).length
 
-  // Helper to push updated params to router
+  // Helper to push updated params to router with non-blocking transition
   const applyParams = (overrides: Partial<typeof currentFilters>) => {
     const next = {
       q: searchQuery.trim(),
@@ -71,7 +72,9 @@ export default function ExploreFilters({
     if (next.result) params.set('result', next.result)
 
     const qs = params.toString()
-    router.push(qs ? `${pathname}?${qs}` : pathname)
+    startTransition(() => {
+      router.push(qs ? `${pathname}?${qs}` : pathname)
+    })
   }
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -85,7 +88,9 @@ export default function ExploreFilters({
     setSelectedYear('')
     setSelectedCampus('')
     setSelectedResult('')
-    router.push(pathname)
+    startTransition(() => {
+      router.push(pathname)
+    })
   }
 
   const handleQuickCampusClick = (campusName: string) => {
@@ -128,8 +133,8 @@ export default function ExploreFilters({
             </button>
           )}
 
-          <button type="submit" className={styles.searchBtn}>
-            SEARCH
+          <button type="submit" className={styles.searchBtn} disabled={isPending} style={{ opacity: isPending ? 0.7 : 1 }}>
+            {isPending ? 'Searching...' : 'Search'}
           </button>
         </form>
 
@@ -151,7 +156,7 @@ export default function ExploreFilters({
             <line x1="9" y1="8" x2="15" y2="8" />
             <line x1="17" y1="16" x2="23" y2="16" />
           </svg>
-          <span>FILTERS</span>
+          <span>Filters</span>
           {activeCount > 0 && (
             <span className={styles.activeBadge}>{activeCount}</span>
           )}
@@ -164,7 +169,7 @@ export default function ExploreFilters({
       {/* Quick Campus Bar */}
       <div className={styles.quickCampusRow}>
         <div className={styles.quickCampusLabel}>
-          <span>CAMPUS //</span>
+          <span>Campuses:</span>
         </div>
         <div className={styles.quickCampusList}>
           <button
@@ -195,7 +200,7 @@ export default function ExploreFilters({
         <div className={styles.drawer}>
           <div className={styles.drawerHeader}>
             <div className={styles.drawerTitle}>
-              <span className={styles.drawerKicker}>// ADVANCED CRITERIA MATRIX</span>
+              <span className={styles.drawerKicker}>Archive Criteria & Filters</span>
               <span className={styles.drawerSubtitle}>Narrow down verified interview debriefs</span>
             </div>
             {activeCount > 0 && (
@@ -213,7 +218,7 @@ export default function ExploreFilters({
             {/* Field 1: Company */}
             <div className={styles.fieldGroup}>
               <label className={styles.fieldLabel} htmlFor="filter-drawer-company">
-                TARGET COMPANY
+                Company
               </label>
               <select
                 id="filter-drawer-company"
@@ -221,7 +226,7 @@ export default function ExploreFilters({
                 value={selectedCompany}
                 onChange={(e) => setSelectedCompany(e.target.value)}
               >
-                <option value="">ALL COMPANIES ({allCompanies.length})</option>
+                <option value="">All Companies ({allCompanies.length})</option>
                 {allCompanies.map((c) => (
                   <option key={c.id} value={c.name}>
                     {c.name}
@@ -233,7 +238,7 @@ export default function ExploreFilters({
             {/* Field 2: Campus */}
             <div className={styles.fieldGroup}>
               <label className={styles.fieldLabel} htmlFor="filter-drawer-campus">
-                INSTITUTION / CAMPUS
+                College / Campus
               </label>
               <select
                 id="filter-drawer-campus"
@@ -241,7 +246,7 @@ export default function ExploreFilters({
                 value={selectedCampus}
                 onChange={(e) => setSelectedCampus(e.target.value)}
               >
-                <option value="">ALL CAMPUSES ({allCampuses.length})</option>
+                <option value="">All Campuses ({allCampuses.length})</option>
                 {allCampuses.map((c) => (
                   <option key={c.id} value={c.name}>
                     {c.name}
@@ -253,7 +258,7 @@ export default function ExploreFilters({
             {/* Field 3: Passing Year Button Group */}
             <div className={styles.fieldGroup}>
               <label className={styles.fieldLabel}>
-                PASSING BATCH
+                Graduating Batch
               </label>
               <div className={styles.pillButtonGroup}>
                 {['', '2026', '2025', '2024'].map((yr) => (
@@ -263,7 +268,7 @@ export default function ExploreFilters({
                     className={`${styles.pillBtn} ${selectedYear === yr ? styles.pillBtnActive : ''}`}
                     onClick={() => setSelectedYear(yr)}
                   >
-                    {yr ? yr : 'ALL'}
+                    {yr ? `Class of ${yr}` : 'All Batches'}
                   </button>
                 ))}
               </div>
@@ -272,13 +277,13 @@ export default function ExploreFilters({
             {/* Field 4: Result Button Group */}
             <div className={styles.fieldGroup}>
               <label className={styles.fieldLabel}>
-                INTERVIEW OUTCOME
+                Interview Outcome
               </label>
               <div className={styles.pillButtonGroup}>
                 {[
-                  { label: 'ALL', value: '' },
-                  { label: 'SELECTED', value: 'Selected', color: 'success' },
-                  { label: 'NOT SELECTED', value: 'Not Selected', color: 'danger' }
+                  { label: 'All Outcomes', value: '' },
+                  { label: 'Offered', value: 'Selected', color: 'success' },
+                  { label: 'Not Selected', value: 'Not Selected', color: 'danger' }
                 ].map((opt) => (
                   <button
                     key={opt.value}
@@ -303,8 +308,8 @@ export default function ExploreFilters({
               <span className={styles.drawerDot} />
               <span>
                 {activeCount === 0
-                  ? 'NO FILTERS APPLIED — SHOWING ALL ARCHIVES'
-                  : `${activeCount} ACTIVE CRITERIA APPLIED`}
+                  ? 'Showing all verified archives'
+                  : `${activeCount} filter criteria applied`}
               </span>
             </div>
 
@@ -314,7 +319,7 @@ export default function ExploreFilters({
                 className={styles.drawerCancelBtn}
                 onClick={() => setIsExpanded(false)}
               >
-                Close Panel
+                Close
               </button>
               <button
                 type="button"
@@ -324,7 +329,7 @@ export default function ExploreFilters({
                   setIsExpanded(false)
                 }}
               >
-                Apply Criteria →
+                Apply Filters →
               </button>
             </div>
           </div>
