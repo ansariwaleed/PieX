@@ -395,3 +395,25 @@ textarea.input::placeholder {
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
+
+/* ——————————————————————— Global Mobile Responsiveness ——————————————————————— */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1.125rem;
+  }
+
+  body:has([data-auth-page]) {
+    overflow-y: auto !important;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .card {
+    padding: 1.25rem;
+  }
+
+  .footer {
+    padding: 2.5rem 0;
+    margin-top: 3.5rem;
+  }
+}

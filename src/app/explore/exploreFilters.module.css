@@ -540,6 +540,50 @@
   }
 
   .searchBtn {
-    padding: 0.75rem 1rem;
+    padding: 0.85rem 1rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .quickCampusRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .quickCampusList {
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.35rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .quickCampusList::-webkit-scrollbar {
+    display: none;
+  }
+
+  .drawer {
+    padding: 1.15rem;
+  }
+
+  .drawerFooter {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .drawerActions {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .drawerCancelBtn,
+  .drawerApplyBtn {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
   }
 }

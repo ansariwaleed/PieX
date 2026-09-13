@@ -638,3 +638,118 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 768px) {
+  .readingContainer {
+    padding: 0 0.5rem 4rem;
+  }
+
+  .topNavRow {
+    padding: 1.25rem 0 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .articleTitle {
+    font-size: clamp(1.85rem, 7vw, 2.35rem);
+    line-height: 1.2;
+    margin-bottom: 0.65rem;
+  }
+
+  .articleSubtitle {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .parametersBar {
+    grid-template-columns: 1fr;
+    margin-bottom: 1.5rem;
+  }
+
+  .paramBox {
+    padding: 1rem 1.15rem;
+  }
+
+  .verifiedBanner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1.15rem;
+    margin-bottom: 2rem;
+  }
+
+  .strategicAdviceBanner {
+    padding: 1.25rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .strategicTitle {
+    font-size: 1.25rem;
+  }
+
+  .strategicText {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+
+  .sectionHeading {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .roundCard {
+    padding: 1.25rem 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .roundTitle {
+    font-size: 1.45rem;
+    margin-bottom: 1rem;
+  }
+
+  .roundMetaRow {
+    gap: 0.75rem;
+    font-size: 0.78rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+  }
+
+  .roundProse {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    padding: 1.25rem 1rem;
+    margin: 1rem 0;
+  }
+
+  .roundActionRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .adviceCard {
+    padding: 1.35rem 1.15rem;
+  }
+
+  .adviceTitle {
+    font-size: 1.45rem;
+  }
+
+  .adviceItem {
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .collegiateStamp {
+    flex-direction: column;
+    padding: 1.5rem 1.25rem;
+    gap: 1rem;
+    margin: 2.5rem 0 1.5rem;
+  }
+
+  .relatedTitle {
+    font-size: 1.6rem;
+  }
+}

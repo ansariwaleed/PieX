@@ -369,6 +369,7 @@
   letter-spacing: 0.02em;
 }
 
+/* ——————————————————————— Responsive Breakpoints ——————————————————————— */
 @media (max-width: 900px) {
   .statsRow {
     grid-template-columns: repeat(2, 1fr);
@@ -379,18 +380,112 @@
   }
 }
 
-@media (max-width: 640px) {
-  .statsRow {
-    grid-template-columns: 1fr;
+@media (max-width: 768px) {
+  .hero {
+    padding: 3.5rem 0 2.5rem;
   }
 
-  .statItem {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    padding: 1.5rem 0;
+  .eyebrow {
+    font-size: 0.7rem;
+    margin-bottom: 1rem;
+  }
+
+  .title {
+    font-size: clamp(2rem, 7.5vw, 2.75rem);
+    line-height: 1.18;
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+  }
+
+  .sectionHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 2.5rem 0 1.25rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.75rem;
   }
 
   .grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Sleek 2x2 Metrics Grid on mobile */
+  .statsRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .statItem {
+    padding: 1.5rem 1rem;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .statItem:nth-child(2n) {
+    border-right: none;
+  }
+
+  .statItem:nth-child(3),
+  .statItem:nth-child(4) {
+    border-bottom: none;
+  }
+
+  .statItem:first-child {
+    padding-left: 1rem;
+  }
+
+  .statNumber {
+    font-size: 2.15rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .statLabel {
+    font-size: 0.75rem;
+  }
+
+  .tags {
+    gap: 0.4rem;
+  }
+
+  .tagLabel {
+    width: 100%;
+    margin-bottom: 0.2rem;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.65rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .searchContainer {
+    flex-direction: column;
+  }
+
+  .searchIcon {
+    display: none;
+  }
+
+  .searchInput {
+    padding: 0.85rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .searchBtn {
+    padding: 0.85rem 1rem;
+    width: 100%;
+    justify-content: center;
   }
 }
